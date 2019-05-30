@@ -13,13 +13,13 @@
 
 <script>
 export default {
-  name: "signin",
+  name: 'signin',
   data() {
     return {
-      id: "",
-      password: ""
+      id: '',
+      password: '',
     };
-  }
+  },
 };
 </script>
 
