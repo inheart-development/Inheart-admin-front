@@ -25,7 +25,7 @@
 import navigationDrawer from '../components/NavigationDrawer.vue';
 
 export default {
-  name: 'stastics',
+  name: 'statistics',
   components: { navigationDrawer },
   data() {
     return {
