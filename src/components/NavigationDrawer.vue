@@ -10,9 +10,10 @@
     </div>
     <div class="navigation">
       <router-link to="/statistics" class="navigator">통계</router-link>
-      <router-link to="/main" class="navigator">명상 컨텐츠 관리</router-link>
-      <router-link to="/statistics" class="navigator">명상 설문 관리</router-link>
-      <router-link to="/statistics" class="navigator">FAQ 게시글 관리</router-link>
+      <router-link to="/content" class="navigator">명상 컨텐츠 관리</router-link>
+      <router-link to="/survey" class="navigator">명상 설문 관리</router-link>
+      <router-link to="/faq" class="navigator">FAQ 게시글 관리</router-link>
+      <router-link to="/user" class="navigator">사용자 계정 관리</router-link>
     </div>
   </div>
 </template>
