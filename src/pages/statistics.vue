@@ -5,17 +5,8 @@
       @close-drawer="closeDrawer"
     />
     <div class="statistics-content">
-      <div class="statistics-header">
-        <img
-          class="menu-icon"
-          @click="openDrawer"
-          src="../assets/ic_black_menu.png"
-          alt="menu icon"
-        >
-        <h2 class="statistics-title">통계</h2>
-      </div>
-      <div >
-
+      <page-header title="통계" @open-drawer="openDrawer" />
+      <div>
       </div>
     </div>
   </div>
@@ -23,10 +14,11 @@
 
 <script>
 import navigationDrawer from '../components/NavigationDrawer.vue';
+import pageHeader from '../components/PageHeader.vue';
 
 export default {
   name: 'statistics',
-  components: { navigationDrawer },
+  components: { navigationDrawer, pageHeader },
   data() {
     return {
       isDrawerOpened: false,
@@ -47,23 +39,5 @@ export default {
 .statistics {
   height: 100vh;
   background: linear-gradient(#a7c4cd, #b4a0bd);
-}
-
-.statistics-header {
-  display: flex;
-  align-items: center;
-  padding: 1em 1em;
-}
-
-.menu-icon {
-  width: 2em;
-  height: 2em;
-}
-
-.statistics-title {
-  flex: 1;
-  color: #fff;
-  text-align: center;
-  margin: 0;
 }
 </style>
