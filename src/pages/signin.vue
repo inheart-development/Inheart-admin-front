@@ -6,19 +6,39 @@
     </div>
     <input class="input-box" placeholder="id" v-model="id">
     <input type="password" class="input-box" placeholder="password" v-model="password">
-    <div class="sign-in-btn">로그인</div>
+    <div class="sign-in-btn" @click="signin">로그인</div>
     <img class="midas-logo" :src="require('@/assets/logo.png')" :alt="'logo'">
   </div>
 </template>
 
 <script>
+import { signin } from '../lib/signin';
+
 export default {
   name: 'signin',
   data() {
     return {
-      id: '',
-      password: '',
+      id: 'admin@midasIT.com',
+      password: '1234',
     };
+  },
+  methods: {
+    async signin() {
+      try {
+        const response = await signin({
+          email: this.id,
+          password: this.password,
+        });
+        if (response.status === 200) {
+          // eslint-disable-next-line
+          alert('로그인 성공!');
+          this.$router.push('/statistics');
+        }
+      } catch (e) {
+        // eslint-disable-next-line
+        console.log(e);
+      }
+    },
   },
 };
 </script>
