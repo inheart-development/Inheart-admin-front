@@ -6,7 +6,8 @@
     />
     <div class="survey-content">
       <page-header title="명상 설문 관리" @open-drawer="openDrawer" />
-      <div>
+      <div class="survey-card-container">
+        <survey-card title="12312312" index="1"/>
       </div>
     </div>
   </div>
@@ -15,10 +16,11 @@
 <script>
 import navigationDrawer from '../components/NavigationDrawer.vue';
 import pageHeader from '../components/PageHeader.vue';
+import SurveyCard from '../components/SurveyCard.vue';
 
 export default {
   name: 'survey',
-  components: { navigationDrawer, pageHeader },
+  components: { navigationDrawer, pageHeader, SurveyCard },
   data() {
     return {
       isDrawerOpened: false,
