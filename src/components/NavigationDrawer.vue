@@ -39,6 +39,7 @@ export default {
   width: 70%;
   display: flex;
   flex-direction: column;
+  z-index:2;
 }
 
 .navigation-drawer-header {
