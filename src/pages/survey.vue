@@ -12,6 +12,7 @@
           :title="survey.surveyTitle"
           :index="survey.surveyTitleNo"
           :key="i"
+          @update="update"
         />
       </div>
     </div>
@@ -51,9 +52,12 @@ export default {
         console.log(e);
       }
     },
+    update() {
+      this.getSurveysData();
+    },
   },
   mounted() {
-    this.getSurveysData();
+    this.update();
   },
 };
 </script>
