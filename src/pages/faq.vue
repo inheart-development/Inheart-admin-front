@@ -6,7 +6,7 @@
     />
     <div class="faq-content">
       <page-header title="FAQ 게시글 관리" @open-drawer="openDrawer" />
-      <div>
+      <div class="faq-container">
         <faq-card
           v-for="faq in faqs"
           :question="faq.faqQuestion"
@@ -60,7 +60,13 @@ export default {
 
 <style scoped>
 .faq {
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(#a7c4cd, #b4a0bd);
+}
+
+.faq-container {
+  display: grid;
+  grid-gap: 1em;
+  padding: 1em;
 }
 </style>
