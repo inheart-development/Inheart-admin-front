@@ -54,29 +54,35 @@ export default {
       this.isEditable = value;
     },
     async deleteFaqItem() {
-      try {
-        await deleteFaq({
-          index: this.index,
-        });
-        // eslint-disable-next-line
-        alert('faq 삭제!');
-        this.$emit('update');
-      } catch (e) {
-        // eslint-disable-next-line
-        console.log(e);
+      // eslint-disable-next-line
+      if(confirm('게시글을 삭제하시겠습니까?')) {
+        try {
+          await deleteFaq({
+            index: this.index,
+          });
+          // eslint-disable-next-line
+          alert('faq 삭제!');
+          this.$emit('update');
+        } catch (e) {
+          // eslint-disable-next-line
+          console.log(e);
+        }
       }
     },
     async modifyFaqItem() {
-      try {
-        await modifyFaq({
-          question: this.localQuestion,
-          answer: this.localAnswer,
-          index: this.index,
-        });
-        this.$emit('update');
-      } catch (e) {
-        // eslint-disable-next-line
-        console.log(e);
+      // eslint-disable-next-line
+      if(confirm('게시글을 수정하시겠습니까?')) {
+        try {
+          await modifyFaq({
+            question: this.localQuestion,
+            answer: this.localAnswer,
+            index: this.index,
+          });
+          this.$emit('update');
+        } catch (e) {
+          // eslint-disable-next-line
+          console.log(e);
+        }
       }
     },
     onClickCheck() {
