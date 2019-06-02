@@ -7,7 +7,12 @@
     <div class="survey-content">
       <page-header title="명상 설문 관리" @open-drawer="openDrawer" />
       <div class="survey-card-container">
-        <survey-card title="12312312" index="1"/>
+        <survey-card
+          v-for="(survey, i) in surveys"
+          :title="survey.surveyTitle"
+          :index="survey.surveyTitleNo"
+          :key="i"
+        />
       </div>
     </div>
   </div>
@@ -17,6 +22,7 @@
 import navigationDrawer from '../components/NavigationDrawer.vue';
 import pageHeader from '../components/PageHeader.vue';
 import SurveyCard from '../components/SurveyCard.vue';
+import { getSurveys } from '../lib/survey';
 
 export default {
   name: 'survey',
@@ -24,6 +30,7 @@ export default {
   data() {
     return {
       isDrawerOpened: false,
+      surveys: [],
     };
   },
   methods: {
@@ -33,6 +40,20 @@ export default {
     closeDrawer() {
       this.isDrawerOpened = false;
     },
+    async getSurveysData() {
+      try {
+        const response = await getSurveys();
+        this.surveys = response.data.data;
+      } catch (e) {
+        // eslint-disable-next-line
+        alert('설문조사 리스트 조회를 실패했습니다.');
+        // eslint-disable-next-line
+        console.log(e);
+      }
+    },
+  },
+  mounted() {
+    this.getSurveysData();
   },
 };
 </script>
@@ -41,5 +62,11 @@ export default {
 .survey {
   height: 100vh;
   background: linear-gradient(#a7c4cd, #b4a0bd);
+}
+
+.survey-card-container {
+  display: grid;
+  grid-gap: 1em;
+  padding: 0 1em;
 }
 </style>
