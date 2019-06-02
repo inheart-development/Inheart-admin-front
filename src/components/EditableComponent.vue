@@ -28,6 +28,11 @@ export default {
   mounted() {
     this.$refs.editable.innerText = this.value;
   },
+  updated() {
+    if (this.$refs.editable.innerText !== this.value) {
+      this.$refs.editable.innerText = this.value;
+    }
+  },
   methods: {
     onInput(e) {
       this.$emit('input', e.target.innerText);
@@ -38,6 +43,7 @@ export default {
 
 <style scoped>
 .editable-component.editable {
+  width: 100%;
   outline: 1px solid black;
 }
 </style>
