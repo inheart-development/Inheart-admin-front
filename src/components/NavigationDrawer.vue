@@ -6,7 +6,7 @@
         <img class="admin-profile-image" src="../assets/ic_userprofile.png" alt="profile-image">
         <span>admin name</span>
       </div>
-      <div class="logout-button">로그아웃</div>
+      <div @click="onSignout" class="logout-button">로그아웃</div>
     </div>
     <div class="navigation">
       <router-link to="/statistics" class="navigator">통계</router-link>
@@ -19,11 +19,24 @@
 </template>
 
 <script>
+import { signout } from '../lib/account';
+
 export default {
   name: 'navigation-drawer',
   methods: {
     closeDrawer() {
       this.$emit('close-drawer');
+    },
+    async onSignout() {
+      try {
+        await signout();
+        // eslint-disable-next-line
+        alert('로그아웃 되었습니다.');
+        this.$router.push('/');
+      } catch (e) {
+        // eslint-disable-next-line
+        console.log(e);
+      }
     },
   },
 };
@@ -72,6 +85,10 @@ export default {
   text-align: center;
   line-height: 2em;
   margin-top: 1rem;
+}
+
+.logout-button:hover {
+  cursor: pointer;
 }
 
 .navigation {

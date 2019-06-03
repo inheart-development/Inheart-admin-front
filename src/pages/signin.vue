@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { signin } from '../lib/signin';
+import { signin } from '../lib/account';
 
 export default {
   name: 'signin',
