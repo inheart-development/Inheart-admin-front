@@ -4,27 +4,29 @@
       <img class="close-icon" @click="onCloseViewer" src="../assets/ic_clear.png" alt="clear">
       <h2 class="title">명상 컨텐츠</h2>
       <select v-model="selected">
-        <option value="0">머리비우기</option>
-        <option value="1">마음비우기</option>
-        <option value="2">마음채우기</option>
-        <option value="3">글로명상하기</option>
+        <option id="category-option" value="카테고리" disabled>카테고리</option>
+        <option value="1">머리비우기</option>
+        <option value="2">마음비우기</option>
+        <option value="3">마음채우기</option>
+        <option value="4">글로명상하기</option>
       </select>
       <input type="text" v-model="title" placeholder="글 제목" />
       <input type="text" v-model="explain" placeholder="글 설명"/>
-      <input type="file" ref="audio" @change="handleFileUpload(setAudio, 'audio')"/>
+      <input type="file" ref="content" @change="handleFileUpload(setContent, 'content')"/>
       <img class="preview" v-if="coverImageUrl !== ''" :src="coverImageUrl" />
       <div class="preview" v-else>미리보기</div>
       <input type="file" ref="cover" @change="handleFileUpload(setCover, 'cover')"/>
-      <textarea v-if="selected === '3'" />
-      <div class="upload">업로드</div>
+      <div @click="onSavePost" class="upload">업로드</div>
     </div>
   </div>
 </template>
 
 <script>
+import { postNewContent, modifyContent } from '../lib/content';
+
 export default {
   name: 'content-detail-viewer',
-  props: [''],
+  props: ['postType', 'detailPost'],
   data() {
     return {
       selected: '카테고리',
@@ -33,6 +35,8 @@ export default {
       audio: '',
       coverImage: '',
       coverImageUrl: '',
+      text: '',
+      id: '',
     };
   },
   methods: {
@@ -42,7 +46,7 @@ export default {
           // eslint-disable-next-line
           let file;
           break;
-        case 'audio':
+        case 'content':
           // eslint-disable-next-line
           file = this.$refs[refName].files[0];
           setFunc(file);
@@ -58,8 +62,12 @@ export default {
       // this.audio = this.$refs.audio.files[0];
       // this.coverImageUrl = URL.createObjectURL(this.audio);
     },
-    setAudio(file) {
-      this.audio = file;
+    setContent(file) {
+      if (this.selected !== 4) {
+        this.audio = file;
+      } else {
+        this.text = file;
+      }
     },
     setCover(file, url) {
       this.coverImage = file;
@@ -68,7 +76,100 @@ export default {
     onCloseViewer() {
       this.$emit('close-viewer');
     },
+    async onSavePost() {
+      if (this.postType === 'create') {
+        await this.onCreateContent();
+        this.onCloseViewer();
+      } else {
+        await this.onModifyContent();
+        this.onCloseViewer();
+      }
+    },
+    async onCreateContent() {
+      try {
+        const form = new FormData();
+        form.append('categoryNo', this.selected);
+        form.append('contentsTitle', this.title);
+        form.append('contentsExplain', this.explain);
+        form.append('contentsType', this.selected !== 4 ? 'sound' : 'text');
+        if (this.selected !== 4) {
+          form.append('contents', this.audio);
+        }
+        await postNewContent({ formData: form });
+        this.$emit('update');
+        // eslint-disable-next-line
+        alert('컨텐츠가 생성되었습니다.');
+      } catch (e) {
+        // eslint-disable-next-line
+        console.log(e);
+      }
+    },
+    async onModifyContent() {
+      try {
+        const form = new FormData();
+        form.append('contentsNo', this.id);
+        form.append('categoryNo', this.selected);
+        form.append('contentsTitle', this.title);
+        form.append('contentsExplain', this.explain);
+        form.append('contentsType', this.selected !== 4 ? 'sound' : 'text');
+        if (this.selected !== 4) {
+          form.append('contents', this.audio);
+        } else {
+          form.append('contents', this.text);
+        }
+        await modifyContent({ formData: form });
+        this.$emit('update');
+        // eslint-disable-next-line
+        alert('컨텐츠가 수정되었습니다.');
+      } catch (e) {
+        // eslint-disable-next-line
+        console.log(e);
+      }
+    },
   },
+  watch: {
+    detailPost: {
+      handler(newValue) {
+        const {
+          categoryNo,
+          contentsTitle,
+          contentsExplain,
+          contents,
+          contentsNo,
+        } = newValue;
+        this.selected = categoryNo;
+        this.title = contentsTitle;
+        this.explain = contentsExplain;
+        this.audio = contents;
+        this.id = contentsNo;
+      },
+    },
+  },
+  mounted() {
+    if (this.postType === 'modify') {
+      const {
+        categoryNo, contentsTitle, contentsExplain, contents, contentsNo,
+      } = this.detailPost;
+      this.selected = categoryNo;
+      this.title = contentsTitle;
+      this.explain = contentsExplain;
+      this.audio = contents;
+      this.id = contentsNo;
+    }
+  },
+  // updated() {
+  //   if (this.postType === 'modify' && this.detailPost.contentsNo !== this.id) {
+  //     console.log('update');
+  //     const {
+  //       categoryNo, contentsTitle, contentsExplain, contents, contentsNo,
+  //     } = this.detailPost;
+  //     this.selected = categoryNo;
+  //     this.title = contentsTitle;
+  //     this.explain = contentsExplain;
+  //     this.audio = contents;
+  //     this.id = contentsNo;
+  //   }
+  // },
 };
 </script>
 
@@ -82,11 +183,14 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
+  box-sizing: border-box;
 }
 
 .content-detail-container {
   height: 100%;
   position: relative;
+  padding: 1em;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
 }
@@ -105,6 +209,10 @@ export default {
   margin-top: 2rem;
 }
 
+#category-option {
+  display: none;
+}
+
 .preview {
   width: 300px;
   height: 300px;
@@ -116,10 +224,11 @@ export default {
 
 .upload {
   position: absolute;
-  bottom: 0;
-  width: 100%;
+  bottom: 1em;
+  width: calc(100% - 2em);
   text-align: center;
   background: #f0f0f0;
   padding: 0.5em 0;
+  box-sizing: border-box;
 }
 </style>
