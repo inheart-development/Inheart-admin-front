@@ -126,6 +126,7 @@ export default {
 .prefix {
   display: inline-block;
   width: 1em;
+  padding-top: 0.5em;
 }
 
 .question, .answer {
