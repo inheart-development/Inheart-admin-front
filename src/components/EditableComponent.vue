@@ -42,8 +42,15 @@ export default {
 </script>
 
 <style scoped>
-.editable-component.editable {
+.editable-component {
   width: 100%;
-  outline: 1px solid black;
+  box-sizing: border-box;
+  padding: 0.5em;
+  line-height: 1em;
+  word-break: break-all;
+}
+
+.editable-component.editable {
+  outline: 1px solid rgba(0, 0, 0, 0.3);
 }
 </style>
