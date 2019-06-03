@@ -24,7 +24,7 @@ export default {
   border-radius: 15px;
   color: #fff;
   text-align: center;
-  font-size: 0.8em;
+  font-size: 0.7em;
 }
 
 .category-button.selected {
