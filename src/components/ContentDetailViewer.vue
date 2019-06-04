@@ -1,21 +1,28 @@
 <template>
-  <div class="content-detail-viewer">
+  <div @keypress="validatePressEnterkey" class="content-detail-viewer">
     <div class="content-detail-container">
       <img class="close-icon" @click="onCloseViewer" src="../assets/ic_clear.png" alt="clear">
       <h2 class="title">명상 컨텐츠</h2>
       <select v-model="selected">
         <option id="category-option" value="카테고리" disabled>카테고리</option>
-        <option value="1">머리비우기</option>
-        <option value="2">마음비우기</option>
-        <option value="3">마음채우기</option>
-        <option value="4">글로명상하기</option>
+        <option :value=1>머리비우기</option>
+        <option :value=2>마음비우기</option>
+        <option :value=3>마음채우기</option>
+        <option :value=4>글명상</option>
+        <option :value=5>자유명상</option>
       </select>
       <input type="text" v-model="title" placeholder="글 제목" />
       <input type="text" v-model="explain" placeholder="글 설명"/>
       <input type="file" ref="content" @change="handleFileUpload(setContent, 'content')"/>
-      <img class="preview" v-if="coverImageUrl !== ''" :src="coverImageUrl" />
-      <div class="preview" v-else>미리보기</div>
-      <input type="file" ref="cover" @change="handleFileUpload(setCover, 'cover')"/>
+      <img class="preview" v-if="coverImageUrl !== '' && selected !== 4" :src="coverImageUrl" />
+      <div class="preview" v-if="coverImageUrl === '' && selected !== 4">미리보기</div>
+      <input
+        v-if="selected !== 4"
+        type="file"
+        ref="cover"
+        @change="handleFileUpload(setCover, 'cover')"
+
+      />
       <div @click="onSavePost" class="upload">업로드</div>
     </div>
   </div>
@@ -88,14 +95,18 @@ export default {
     async onCreateContent() {
       try {
         const form = new FormData();
+        const contentType = this.selected !== 4 ? 'sound' : 'text';
         form.append('categoryNo', this.selected);
         form.append('contentsTitle', this.title);
         form.append('contentsExplain', this.explain);
-        form.append('contentsType', this.selected !== 4 ? 'sound' : 'text');
+        form.append('contentsType', contentType);
         if (this.selected !== 4) {
-          form.append('contents', this.audio);
+          form.append('cover', this.coverImage);
+          form.append('sound', this.audio);
+        } else {
+          form.append('text', this.text);
         }
-        await postNewContent({ formData: form });
+        await postNewContent({ formData: form, contentType });
         this.$emit('update');
         // eslint-disable-next-line
         alert('컨텐츠가 생성되었습니다.');
@@ -107,23 +118,31 @@ export default {
     async onModifyContent() {
       try {
         const form = new FormData();
+        const contentType = this.selected !== 4 ? 'sound' : 'text';
+        console.log(contentType);
         form.append('contentsNo', this.id);
         form.append('categoryNo', this.selected);
         form.append('contentsTitle', this.title);
         form.append('contentsExplain', this.explain);
-        form.append('contentsType', this.selected !== 4 ? 'sound' : 'text');
+        form.append('contentsType', contentType);
         if (this.selected !== 4) {
-          form.append('contents', this.audio);
+          form.append('cover', this.coverImage);
+          form.append('sound', this.audio);
         } else {
-          form.append('contents', this.text);
+          form.append('text', this.text);
         }
-        await modifyContent({ formData: form });
+        await modifyContent({ formData: form, contentType });
         this.$emit('update');
         // eslint-disable-next-line
         alert('컨텐츠가 수정되었습니다.');
       } catch (e) {
         // eslint-disable-next-line
         console.log(e);
+      }
+    },
+    validatePressEnterkey(e) {
+      if (e.keyCode === 13) {
+        this.onSavePost();
       }
     },
   },
@@ -178,10 +197,11 @@ export default {
   width:90vw;
   height: 90vh;
   background: #fff;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  margin-left: -45vw;
+  margin-top: -45vh;
   z-index: 2;
   box-sizing: border-box;
 }
