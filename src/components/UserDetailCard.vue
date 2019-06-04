@@ -11,10 +11,10 @@
     <p class="user-email">{{user.userEmail}}</p>
     <p class="meditation-num">명상 횟수</p>
     <div class="statis-container">
-      <p class="statis-header">머</p>
-      <p class="statis-header">비</p>
-      <p class="statis-header">마</p>
-      <p class="statis-header">채</p>
+      <p class="statis-header">머리비우기</p>
+      <p class="statis-header">마음비우기</p>
+      <p class="statis-header">마음채우기</p>
+      <p class="statis-header">글명상</p>
       <p>{{user.categoryNo_1}}</p>
       <p>{{user.categoryNo_2}}</p>
       <p>{{user.categoryNo_3}}</p>
