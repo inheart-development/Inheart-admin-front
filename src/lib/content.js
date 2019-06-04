@@ -16,17 +16,43 @@ export const getDetailContent = ({ contentsNo }) => axios.get(`${baseUrl}/conten
   },
 });
 
-export const postNewContent = ({ formData }) => axios.post(`${baseUrl}/contents`, formData, {
+const createSoundContent = formData => axios.post(`${baseUrl}/contents/sound`, formData, {
   headers: {
     'Content-Type': 'multipart/form-data',
   },
 });
 
-export const modifyContent = ({ formData }) => axios.put(`${baseUrl}/contents`, formData, {
+const createTextcontent = formData => axios.post(`${baseUrl}/contents/text`, formData, {
   headers: {
     'Content-Type': 'multipart/form-data',
   },
 });
+
+export const postNewContent = ({ formData, contentType }) => {
+  if (contentType === 'sound') {
+    return createSoundContent(formData);
+  }
+  return createTextcontent(formData);
+};
+
+const modifyTextContent = formData => axios.put(`${baseUrl}/contents/text`, formData, {
+  headers: {
+    'Content-Type': 'multipart/form-data',
+  },
+});
+
+const modifySoundContent = formData => axios.put(`${baseUrl}/contents/sound`, formData, {
+  headers: {
+    'Content-Type': 'multipart/form-data',
+  },
+});
+
+export const modifyContent = ({ formData, contentType }) => {
+  if (contentType === 'sound') {
+    return modifySoundContent(formData);
+  }
+  return modifyTextContent(formData);
+};
 
 export const deleteContent = ({ contentsNo }) => axios.delete(`${baseUrl}/contents`, {
   data: {
