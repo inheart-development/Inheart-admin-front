@@ -2,10 +2,6 @@
   <div class="navigation-drawer">
     <div class="navigation-drawer-header">
       <img class="menu-icon" src="../assets/ic_white_menu.png" @click="closeDrawer" />
-      <div class="admin-profile">
-        <img class="admin-profile-image" src="../assets/ic_userprofile.png" alt="profile-image">
-        <span>admin name</span>
-      </div>
       <div @click="onSignout" class="logout-button">로그아웃</div>
     </div>
     <div class="navigation">
@@ -52,7 +48,7 @@ export default {
   width: 70%;
   display: flex;
   flex-direction: column;
-  z-index:2;
+  z-index:3;
 }
 
 .navigation-drawer-header {
@@ -63,19 +59,6 @@ export default {
 .menu-icon {
   width: 2em;
   height: 2em;
-}
-
-.admin-profile {
-  display: flex;
-  align-items: center;
-  color: #fff;
-
-}
-
-.admin-profile-image {
-  width: 50px;
-  height: 50px;
-  margin-right: 1em;
 }
 
 .logout-button {
