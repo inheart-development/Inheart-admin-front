@@ -6,5 +6,6 @@ Vue.config.productionTip = false;
 
 new Vue({
   router,
+  useEslint: false,
   render: h => h(App),
 }).$mount('#app');

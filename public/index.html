@@ -1,12 +1,85 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>inheart-admin</title>
-  </head>
-  <body>
-    <div id="app"></div>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>inheart-admin</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      font-family: 'NanumSquare', 'Nanum Square', 'SpoqaHanSans', 'Spoqa Han Sans', serif;
+      font-weight: 500;
+
+    }
+
+    button {
+      background: none;
+      border: none;
+      outline: none;
+      cursor: pointer
+    }
+
+    @keyframes show {
+      0% {
+        transform: scale(0);
+      }
+      85% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    html, body {
+      background: #f1f3f5;
+      color: #343a40;
+    }
+
+    input, textarea, select, option {
+      border: 0;
+      outline: none;
+      border-radius: 0;
+    }
+
+    input {
+      font-family: 'SpoqaHanSans', 'Spoqa Han Sans', sans-serif;
+    }
+
+    a {
+      text-decoration: none;
+      color: #226e9c
+    }
+
+    .flex-center {
+      display: flex;
+      justify-content: center;
+      align-items: center
+    }
+
+    ::-webkit-scrollbar {
+      width: 10px;
+      background-color: #2C3E50C4;
+      height: 7px
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #2C3E50C4
+    }
+
+    *::-webkit-scrollbar-track {
+      background-color: #DBDDDB
+    }
+
+    body::-webkit-scrollbar {
+      width: 0 !important;
+    }s
+  </style>
+</head>
+<body>
+<div id="app"></div>
+</body>
 </html>

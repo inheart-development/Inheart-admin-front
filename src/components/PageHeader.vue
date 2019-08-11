@@ -1,39 +1,49 @@
 <template>
   <div class="page-header">
-    <img class="menu-icon" @click="openDrawer" src="../assets/ic_black_menu.png" alt="menu icon">
-    <h2 class="page-title">{{title}}</h2>
+    <card class="header-card">
+      <img class="menu-icon" @click="openDrawer" src="../assets/ic_black_menu.png" alt="menu icon">
+      <h2 class="page-title">{{title}}</h2>
+    </card>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'page-header',
-  props: ['title'],
-  methods: {
-    openDrawer() {
-      this.$emit('open-drawer');
+  import Card from './inheart-ui/card';
+
+  export default {
+    name: 'page-header',
+    components: { Card },
+    props: ['title'],
+    methods: {
+      openDrawer() {
+        this.$emit('open-drawer');
+      },
     },
-  },
-};
+  };
 </script>
 
 <style scoped>
-.page-header {
-  display: flex;
-  align-items: center;
-  padding: 1em 1em;
-}
+  .page-header {
+    display: flex;
+    align-items: center;
+    padding: 1em 1em;
+  }
 
-.menu-icon {
-  width: 2em;
-  height: 2em;
-}
+  .menu-icon {
+    width: 2em;
+    height: 2em;
+    cursor: pointer;
+  }
 
-.page-title {
-  flex: 1;
-  color: #fff;
-  text-align: center;
-  margin: 0;
-}
+  .page-title {
+    flex: 1;
+    text-align: center;
+    margin: 0;
+  }
 
+  .header-card {
+    display: flex;
+    height: 60px;
+    font-size: 20px;
+  }
 </style>
