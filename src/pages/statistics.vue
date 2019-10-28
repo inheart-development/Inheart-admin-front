@@ -104,9 +104,14 @@
 
 <style scoped>
   .statistic-list {
+    width: 600px;
+    margin: 0 auto;
     display: flex;
-    justify-content: center;
-    padding: 0 10px;
+    justify-content: space-around;
+  }
+
+  .statistic-list .counter {
+    margin: 20px 0;
   }
 
   .counter {
@@ -128,11 +133,12 @@
 
   .statistics-card {
     height: auto;
-    width: auto;
   }
 
   .statistics {
     height: 100vh;
+    overflow: auto;
+    padding-bottom: 50px;
   }
 
   .statistics-container {
