@@ -1,8 +1,20 @@
 <template>
   <div id="app">
-    <router-view/>
+    <navigation/>
+    <div class="page-wrapper">
+      <router-view/>
+    </div>
   </div>
 </template>
+
+<script>
+import navigation from './components/Navigation.vue'
+
+export default {
+  name: 'App',
+  components: { navigation },
+}
+</script>
 
 <style>
 body {
@@ -10,8 +22,10 @@ body {
 }
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+}
+
+.page-wrapper {
+  flex: 1;
 }
 </style>
