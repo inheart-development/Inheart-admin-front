@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'http://54.180.153.125:3000/admin';
+const baseUrl = 'http://54.180.153.125:3000/api/admin';
 
 export const getUsers = () => axios.get(`${baseUrl}/user/list`);
 

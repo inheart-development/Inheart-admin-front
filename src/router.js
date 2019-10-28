@@ -6,6 +6,7 @@ import Content from './pages/content.vue';
 import Faq from './pages/faq.vue';
 import Survey from './pages/survey.vue';
 import User from './pages/user.vue';
+import Index from './pages/index.vue';
 
 Vue.use(Router);
 
@@ -43,6 +44,10 @@ export default new Router({
       path: '/user',
       name: 'user',
       component: User,
-    },
+    }, {
+      path: '/',
+      name: 'index',
+      component: Index
+    }
   ],
 });

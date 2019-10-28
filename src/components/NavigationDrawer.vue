@@ -23,7 +23,7 @@ export default {
     closeDrawer() {
       this.$emit('close-drawer');
     },
-    async onSignout() {
+    async onSignout() {``
       try {
         await signout();
         // eslint-disable-next-line

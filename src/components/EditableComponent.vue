@@ -51,6 +51,7 @@ export default {
 }
 
 .editable-component.editable {
-  outline: 1px solid rgba(0, 0, 0, 0.3);
+  outline: 0;
+  border-bottom: 1px solid #6d6e72;
 }
 </style>
