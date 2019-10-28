@@ -1,7 +1,6 @@
 <template>
   <div class="page-header">
     <card class="header-card">
-      <img class="menu-icon" @click="openDrawer" src="../assets/ic_black_menu.png" alt="menu icon">
       <h2 class="page-title">{{title}}</h2>
     </card>
   </div>
@@ -15,9 +14,6 @@
     components: { Card },
     props: ['title'],
     methods: {
-      openDrawer() {
-        this.$emit('open-drawer');
-      },
     },
   };
 </script>
