@@ -27,7 +27,7 @@
               :options="options"
             />
           </div>
-          <div class="total-count">총 접속횟수: {{totalData}}회</div>
+          <!-- <div class="total-count">총 접속횟수: {{totalData}}회</div> -->
         </div>
       </card>
     </div>
@@ -71,7 +71,6 @@
         return Math.floor(this.totalData / this.totalDay);
       }
     },
-
     methods: {
       openDrawer() {
         this.isDrawerOpened = true;
@@ -107,7 +106,7 @@
   .statistic-list {
     display: flex;
     justify-content: center;
-    padding:0 10px;
+    padding: 0 10px;
   }
 
   .counter {
@@ -147,11 +146,5 @@
     padding: 1em;
     box-sizing: border-box;
 
-  }
-
-  .total-count {
-    text-align: center;
-    height: 3em;
-    line-height: 3em;
   }
 </style>
