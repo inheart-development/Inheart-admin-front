@@ -41,6 +41,10 @@ export default {
           name: 'FAQ 게시글 관리',
           route: 'faq'
         },
+        {
+          name: '공지사항 관리',
+          route: 'notice'
+        }
       ],
     };
   },
