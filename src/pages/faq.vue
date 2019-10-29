@@ -3,6 +3,9 @@
     <div class="faq-content">
       <page-header title="FAQ 게시글 관리"/>
       <div class="faq-container">
+        <card class="add-btn" @click="createFaq">
+          추가하기
+        </card>
         <faq-card
           v-for="faq in faqs"
           :question="faq.faqQuestion"
@@ -17,6 +20,7 @@
 </template>
 
 <script>
+  import Card from '../components/inheart-ui/card';
   import pageHeader from '../components/PageHeader.vue';
   import FaqCard from '../components/FaqCard.vue';
   import { getFaqs } from '../lib/faq';
@@ -24,6 +28,7 @@
   export default {
     name: 'faq',
     components: {
+      Card,
       pageHeader,
       FaqCard
     },
@@ -42,6 +47,8 @@
           console.log(e);
         }
       },
+      createFaq() {
+      }
     },
     mounted() {
       this.getFaqData();
@@ -55,5 +62,11 @@
     overflow: auto;
     padding: 10px 10px 30px 10px;
     min-height: 100vh;
+  }
+
+  .add-btn {
+    height: 70px;
+    font-size: 20px;
+    cursor: pointer;
   }
 </style>
