@@ -75,6 +75,12 @@
         this.postType = 'modify';
         this.openViewer();
       },
+      openViewer() {
+        this.isViewerOpen = true;
+      },
+      closeViewer() {
+        this.isViewerOpen = false;
+      },
       async getAllContentData() {
         try {
           const response = await getAllContent();
