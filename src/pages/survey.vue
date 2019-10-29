@@ -1,9 +1,5 @@
 <template>
   <div class="container">
-    <navigation-drawer
-      v-show="isDrawerOpened"
-      @close-drawer="closeDrawer"
-    />
     <div class="survey-content">
       <page-header title="명상 설문 관리" @open-drawer="openDrawer"/>
       <div class="survey-card-container">
@@ -20,7 +16,6 @@
 </template>
 
 <script>
-  import navigationDrawer from '../components/NavigationDrawer.vue';
   import pageHeader from '../components/PageHeader.vue';
   import SurveyCard from '../components/SurveyCard.vue';
   import { getSurveys } from '../lib/survey';
@@ -28,7 +23,6 @@
   export default {
     name: 'survey',
     components: {
-      navigationDrawer,
       pageHeader,
       SurveyCard
     },
