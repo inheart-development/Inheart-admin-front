@@ -1,0 +1,42 @@
+$theme-color: #2C3E50;
+$color: #343a40;
+$background: #fff;
+$box-shadow: 0 5px 12px -3px rgba(85, 103, 134, 0.35);
+$dark-background: #343a40;
+$dark-color: #f8f9fa;
+$dark-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .5);
+$dark-placeholder-color: #adb5bd;
+$transition: all .4s ease-in-out;
+$radius: 8px;
+
+/** color **/
+$error: #e03131;
+$warn: #f08c00;
+$info: #228be6;
+$success: #2f9e44;
+
+
+@mixin flex {
+  display: flex;
+  align-items: center;
+}
+
+@mixin flex-center {
+  @include flex;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  @include flex;
+  justify-content: space-between;
+}
+
+.top-text {
+  @include flex;
+  font-size: 24px;
+}
+
+.empty {
+  width: 24px;
+  opacity: 0;
+}
