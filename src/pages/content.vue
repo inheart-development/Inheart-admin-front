@@ -1,13 +1,7 @@
 <template>
   <div class="container">
-    <navigation-drawer
-      v-show="isDrawerOpened"
-      @close-drawer="closeDrawer"
-    />
     <div class="meditation-content-content">
       <page-header title="명상 컨텐츠 관리" @open-drawer="openDrawer"/>
-
-
       <div class="meditation-card-container">
         <div @click="createContent">
           <card class="add-btn">
@@ -36,7 +30,6 @@
 </template>
 
 <script>
-  import navigationDrawer from '../components/NavigationDrawer.vue';
   import pageHeader from '../components/PageHeader.vue';
   import CategoryButton from '../components/utils/CategoryButton.vue';
   import ContentPreviewCard from '../components/ContentPreviewCard.vue';
@@ -50,7 +43,6 @@
     name: 'contents',
     components: {
       Card,
-      navigationDrawer,
       pageHeader,
       CategoryButton,
       ContentPreviewCard,
@@ -67,7 +59,6 @@
       return {
         tags: ['잔잔한', '평온한', '따뜻한', '시원한', '행복한', '기쁜', '긍정적인'],
         isDrawerOpened: false,
-        selectedCategory: 0,
         allContent: [],
         isViewerOpen: false,
         postType: 'create',
@@ -75,21 +66,6 @@
       };
     },
     methods: {
-      openDrawer() {
-        this.isDrawerOpened = true;
-      },
-      closeDrawer() {
-        this.isDrawerOpened = false;
-      },
-      selectCategory(category) {
-        this.selectedCategory = category;
-      },
-      openViewer() {
-        this.isViewerOpen = true;
-      },
-      closeViewer() {
-        this.isViewerOpen = false;
-      },
       createContent() {
         this.postType = 'create';
         this.openViewer();

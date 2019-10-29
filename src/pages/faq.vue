@@ -1,9 +1,5 @@
 <template>
   <div class="container">
-    <navigation-drawer
-      v-show="isDrawerOpened"
-      @close-drawer="closeDrawer"
-    />
     <div class="faq-content">
       <page-header title="FAQ 게시글 관리" @open-drawer="openDrawer"/>
       <div class="faq-container">
@@ -21,7 +17,6 @@
 </template>
 
 <script>
-  import navigationDrawer from '../components/NavigationDrawer.vue';
   import pageHeader from '../components/PageHeader.vue';
   import FaqCard from '../components/FaqCard.vue';
   import { getFaqs } from '../lib/faq';
@@ -29,23 +24,15 @@
   export default {
     name: 'faq',
     components: {
-      navigationDrawer,
       pageHeader,
       FaqCard
     },
     data() {
       return {
-        isDrawerOpened: false,
         faqs: [],
       };
     },
     methods: {
-      openDrawer() {
-        this.isDrawerOpened = true;
-      },
-      closeDrawer() {
-        this.isDrawerOpened = false;
-      },
       async getFaqData() {
         try {
           const response = await getFaqs();

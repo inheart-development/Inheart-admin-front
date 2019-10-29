@@ -1,6 +1,5 @@
 <template>
   <div class="statistics">
-    <navigation-drawer v-show="isDrawerOpened" @close-drawer="closeDrawer"/>
     <div class="statistics-content">
       <page-header title="통계" @open-drawer="openDrawer"/>
       <div class="statistic-list">
@@ -35,7 +34,6 @@
 </template>
 
 <script>
-  import navigationDrawer from '../components/NavigationDrawer.vue';
   import pageHeader from '../components/PageHeader.vue';
   import { getDailyConnect, getTotalConnect } from '../lib/statistics';
   import LineChart from '../components/LineChart.vue';
@@ -45,13 +43,11 @@
     name: 'statistics',
     components: {
       Card,
-      navigationDrawer,
       pageHeader,
       LineChart
     },
     data() {
       return {
-        isDrawerOpened: false,
         dataset: {
           label: '사용량',
           backgroundColor: 'rgba(231,76,60, 0.3)',
@@ -72,12 +68,6 @@
       }
     },
     methods: {
-      openDrawer() {
-        this.isDrawerOpened = true;
-      },
-      closeDrawer() {
-        this.isDrawerOpened = false;
-      },
       async getDailyData() {
         const response = await getDailyConnect();
         const { data } = response.data;
