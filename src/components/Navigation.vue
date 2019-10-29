@@ -8,9 +8,9 @@
       <ul>
         <li v-for="(link, index) in links" :key="index" :class="$route.path === `/${link.route}` ? 'active' : null">
           <router-link :to="link.route" class="navigator">
-            {{link.name}}
+            <span>{{link.name}}</span>
+            <img src="../assets/ic_keyboard_arrow_right.png" alt="arrow_right">
           </router-link>
-          <img src="../assets/ic_keyboard_arrow_right.png" alt="arrow_right">
         </li>
       </ul>
     </div>
@@ -74,10 +74,7 @@ export default {
 
 li {
   height: 45px;
-  display: flex;
-  align-items: center;
   list-style-type: none;
-  position: relative;
   opacity: 0.7;
 }
 
@@ -85,17 +82,25 @@ li.active, li:hover {
   opacity: 1;
 }
 
-li > img {
+.navigator {
+  position: relative;
+}
+
+.navigator > img {
   position: absolute;
   right: 0;
 }
 
-a {
+.navigator {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  width: 100%;
   color: #fff;
   text-decoration: none;
 }
 
-a:hover {
+.navigator:hover {
   opacity: 1;
 }
 
