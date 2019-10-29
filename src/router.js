@@ -31,11 +31,6 @@ export default new Router({
       component: Content,
     },
     {
-      path: '/survey',
-      name: 'survey',
-      component: Survey,
-    },
-    {
       path: '/faq',
       name: 'faq',
       component: Faq,

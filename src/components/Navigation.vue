@@ -34,10 +34,6 @@ export default {
           route: 'content'
         },
         {
-          name: '명상 설문 관리',
-          route: 'survey'
-        },
-        {
           name: 'FAQ 게시글 관리',
           route: 'faq'
         },
@@ -60,6 +56,8 @@ export default {
 <style scoped>
 .navigation {
   width: 250px;
+  min-height: 100vh;
+  height:100%;
   background: #393c65;
   color: #fff;
   padding: 0 20px;
