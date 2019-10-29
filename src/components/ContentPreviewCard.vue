@@ -1,17 +1,15 @@
 <template>
-  <div class="flex-center">
-    <div class="content-preview">
-      <card class="content-preview-card">
-        <div class="text-container">
-          <p class="title">{{contentTitle}}</p>
-          <p class="explain">{{contentExplainEllipis}}</p>
-        </div>
-        <div class="actions">
-          <floating-button><img @click="modifyContent" class="icon edit" src="../../public/icon/edit.svg" alt="edit"></floating-button>
-          <floating-button><img @click="onDeleteContent" class="icon delete" src="../../public/icon/delete.svg" alt="delete"></floating-button>
-        </div>
-      </card>
-    </div>
+  <div class="content-preview">
+    <card class="content-preview-card">
+      <div class="text-container">
+        <p class="title">{{contentTitle}}</p>
+        <p class="explain">{{contentExplainEllipis}}</p>
+      </div>
+      <div class="actions">
+        <floating-button><img @click="modifyContent" class="icon edit" src="../../public/icon/edit.svg" alt="edit"></floating-button>
+        <floating-button><img @click="onDeleteContent" class="icon delete" src="../../public/icon/delete.svg" alt="delete"></floating-button>
+      </div>
+    </card>
   </div>
 </template>
 
