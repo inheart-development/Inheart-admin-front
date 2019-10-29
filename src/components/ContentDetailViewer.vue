@@ -1,21 +1,14 @@
 <template>
   <modal :is_open="isOpen">
     <div @keypress="validatePressEnterkey">
-      <card class="detail-viewer-card">
+      <card id="inner-space" class="detail-viewer-card">
         <div>
           <div class="input-container">
             <div class="flex-clear">
               <h2 class="title">명상 컨텐츠</h2>
               <div class="input-item">
-                <label class="custom-label login-label" for="category">카테고리</label>
-                <select v-model="selected" id="category">
-                  <option id="category-option" value="카테고리" disabled>카테고리</option>
-                  <option :value=1>머리비우기</option>
-                  <option :value=2>마음비우기</option>
-                  <option :value=3>마음채우기</option>
-                  <option :value=4>글명상</option>
-                  <option :value=5>자유명상</option>
-                </select>
+                <label class="custom-label login-label" for="tag">태그</label>
+                <tag-button-editor @createTag="createTag" @deleteTag="deleteTag" @changeTag="changeNewTag" :newTag="newTag" :tags="tags" />
               </div>
               <div class="input-item">
                 <label class="custom-label login-label" for="title">제목</label>
@@ -25,6 +18,7 @@
                   placeholder="제목"
                   type="text"
                   v-model="title"
+                  autocomplete=”off”
                 >
               </div>
               <div class="input-item">
@@ -35,6 +29,7 @@
                   placeholder="설명"
                   type="text"
                   v-model="explain"
+                  autocomplete=”off”
                 >
               </div>
               <div v-if="selected !== 4" class="input-item">
@@ -72,12 +67,16 @@
   import { postNewContent, modifyContent } from '../lib/content';
   import Modal from './inheart-ui/modal';
   import Card from './inheart-ui/card';
+  import ButtonList from './inheart-ui/button-list';
+  import TagButtonEditor from './TagButtonEditor';
 
   export default {
     name: 'content-detail-viewer',
     components: {
       Card,
-      Modal
+      Modal,
+      ButtonList,
+      TagButtonEditor
     },
     props: ['postType', 'detailPost'],
     data() {
@@ -91,6 +90,8 @@
         coverImageUrl: '',
         text: '',
         id: '',
+        tags: [],
+        newTag: '',
       };
     },
     methods: {
@@ -130,6 +131,17 @@
       onCloseViewer() {
         this.$emit('close-viewer');
         this.isOpen = false;
+      },
+      deleteTag(index) {
+        const temp = [...this.tags];
+        temp.splice(index, 1);
+        this.tags = temp;
+      },
+      createTag(tag) {
+        this.tags = [...this.tags, tag];
+      },
+      changeNewTag(newVal) {
+        this.newTag = newVal;
       },
       async onSavePost() {
         if (this.postType === 'create') {
@@ -246,6 +258,7 @@
   }
 
   .detail-viewer-card {
+    margin-top: 0;
     height: auto;
     max-height: 80vh;
     overflow: auto;
@@ -283,7 +296,7 @@
 
   .title {
     text-align: center;
-    margin: 1rem 0;
+    margin-bottom: 1rem;
   }
 
   #category-option {
