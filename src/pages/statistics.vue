@@ -1,7 +1,7 @@
 <template>
   <div class="statistics">
     <div class="statistics-content">
-      <page-header title="통계" @open-drawer="openDrawer"/>
+      <page-header title="통계"/>
       <div class="statistic-list">
         <card class="counter">
           <div class="inner-container">

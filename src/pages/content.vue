@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="meditation-content-content">
-      <page-header title="명상 컨텐츠 관리" @open-drawer="openDrawer"/>
+      <page-header title="명상 컨텐츠 관리"/>
       <div class="meditation-card-container">
         <div @click="createContent">
           <card class="add-btn">

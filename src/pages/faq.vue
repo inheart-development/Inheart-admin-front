@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="faq-content">
-      <page-header title="FAQ 게시글 관리" @open-drawer="openDrawer"/>
+      <page-header title="FAQ 게시글 관리"/>
       <div class="faq-container">
         <faq-card
           v-for="faq in faqs"

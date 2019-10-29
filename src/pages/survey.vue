@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="survey-content">
-      <page-header title="명상 설문 관리" @open-drawer="openDrawer"/>
+      <page-header title="명상 설문 관리"/>
       <div class="survey-card-container">
         <survey-card
           v-for="(survey, i) in surveys"
