@@ -1,22 +1,22 @@
 <template>
   <modal :is_open="isOpen">
     <div @keypress="validatePressEnterkey">
-      <card class="auto-height">
-        <div class="flex-center">
+      <card class="detail-viewer-card">
+        <div>
           <div class="input-container">
             <div class="flex-clear">
               <h2 class="title">명상 컨텐츠</h2>
               <div class="input-item">
-                <label class="custom-label login-label" for="title">카테고리</label>
+                <label class="custom-label login-label" for="category">카테고리</label>
+                <select v-model="selected" id="category">
+                  <option id="category-option" value="카테고리" disabled>카테고리</option>
+                  <option :value=1>머리비우기</option>
+                  <option :value=2>마음비우기</option>
+                  <option :value=3>마음채우기</option>
+                  <option :value=4>글명상</option>
+                  <option :value=5>자유명상</option>
+                </select>
               </div>
-              <select v-model="selected">
-                <option id="category-option" value="카테고리" disabled>카테고리</option>
-                <option :value=1>머리비우기</option>
-                <option :value=2>마음비우기</option>
-                <option :value=3>마음채우기</option>
-                <option :value=4>글명상</option>
-                <option :value=5>자유명상</option>
-              </select>
               <div class="input-item">
                 <label class="custom-label login-label" for="title">제목</label>
                 <input
@@ -37,16 +37,19 @@
                   v-model="explain"
                 >
               </div>
-              <label class="custom-label login-label" for="audio">오디오</label>
-              <input type="file" ref="content" @change="handleFileUpload(setContent, 'content')" id="audio"/>
-              <label class="custom-label login-label" for="cover">커버이미지</label>
-              <input
-                v-if="selected !== 4"
-                type="file"
-                ref="cover"
-                id="cover"
-                @change="handleFileUpload(setCover, 'cover')"
-              />
+              <div v-if="selected !== 4" class="input-item">
+                <label class="custom-label login-label" for="audio">오디오</label>
+                <input type="file" ref="content" @change="handleFileUpload(setContent, 'content')" id="audio"/>
+              </div>
+              <div class="input-item">
+                <label class="custom-label login-label" for="cover">커버이미지</label>
+                <input
+                  type="file"
+                  ref="cover"
+                  id="cover"
+                  @change="handleFileUpload(setCover, 'cover')"
+                />
+              </div>
               <img class="preview" v-if="coverImageUrl !== '' && selected !== 4" :src="coverImageUrl"/>
               <div class="preview" v-if="coverImageUrl === '' && selected !== 4">미리보기</div>
             </div>
@@ -227,19 +230,6 @@
         this.id = contentsNo;
       }
     },
-    // updated() {
-    //   if (this.postType === 'modify' && this.detailPost.contentsNo !== this.id) {
-    //     console.log('update');
-    //     const {
-    //       categoryNo, contentsTitle, contentsExplain, contents, contentsNo,
-    //     } = this.detailPost;
-    //     this.selected = categoryNo;
-    //     this.title = contentsTitle;
-    //     this.explain = contentsExplain;
-    //     this.audio = contents;
-    //     this.id = contentsNo;
-    //   }
-    // },
   };
 </script>
 
@@ -253,11 +243,13 @@
     justify-content: space-evenly;
     align-items: center;
     width: 600px;
-    max-width: calc(100vw - 40px);
   }
 
-  .auto-height {
+  .detail-viewer-card {
     height: auto;
+    max-height: 80vh;
+    overflow: auto;
+    display: block;
   }
 
   .content-detail-viewer {
@@ -305,37 +297,24 @@
     background: #f0f0f0;
     text-align: center;
     line-height: 300px;
-    margin-top: 10px;
+    margin: 10px auto 0;
   }
 
   .btn-card {
-    height: 70px;
+    height: 60px;
     font-size: 20px;
     cursor: pointer;
     width: 100%;
-    max-width: calc((100vw - 60px) / 2 - 10px);
   }
 
   input {
     font-family: 'SpoqaHanSans', 'Spoqa Han Sans', sans-serif;
   }
 
-  .input-container {
-    width: 300px;
-    height: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
   .sign-up {
     margin: 10px 0;
     font-weight: 300;
     font-size: 18px;
-  }
-
-  .container {
-    height: 100vh;
   }
 
   .custom-button {
@@ -393,5 +372,8 @@
     font-weight: 500;
     display: block;
     font-size: 18px;
+  }
+  .add-btn {
+    margin-top: 0;
   }
 </style>

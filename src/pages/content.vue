@@ -6,11 +6,8 @@
     />
     <div class="meditation-content-content">
       <page-header title="명상 컨텐츠 관리" @open-drawer="openDrawer"/>
-      <top-navigation
-        :categories="categories"
-        :item_style="{fontSize:'0.8rem',marginLeft:'7px',width:'25%',display:'flex',justifyContent:'center',alignItems:'center',wordBreak:'keep-all'}"
-        @change="selectCategory"
-      ></top-navigation>
+
+
       <div class="meditation-card-container">
         <div @click="createContent">
           <card class="add-btn">
@@ -47,6 +44,7 @@
   import { getAllContent, getDetailContent } from '../lib/content';
   import Card from '../components/inheart-ui/card';
   import topNavigation from '../components/inheart-ui/topNavigation';
+  import buttonList from '../components/inheart-ui/button-list'
 
   export default {
     name: 'contents',
@@ -58,6 +56,7 @@
       ContentPreviewCard,
       ContentDetailViewer,
       topNavigation,
+      buttonList
     },
     computed: {
       currentContent() {
@@ -66,25 +65,8 @@
     },
     data() {
       return {
+        tags: ['잔잔한', '평온한', '따뜻한', '시원한', '행복한', '기쁜', '긍정적인'],
         isDrawerOpened: false,
-        categories: [
-          {
-            name: '머리 비우기',
-            color: '#E1B52F'
-          },
-          {
-            name: '마음 비우기',
-            color: '#E76577'
-          },
-          {
-            name: '머리 채우기',
-            color: '#A55AA2'
-          },
-          {
-            name: '마음 새기기',
-            color: '#31a0e2'
-          },
-        ],
         selectedCategory: 0,
         allContent: [],
         isViewerOpen: false,
@@ -156,6 +138,11 @@
     overflow: auto;
     padding: 10px 10px 30px 10px;
     min-height: 100vh;
+  }
+
+  .select-box {
+    height: auto;
+    margin-top: 0;
   }
 
 </style>
