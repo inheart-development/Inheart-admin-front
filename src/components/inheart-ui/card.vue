@@ -29,7 +29,6 @@
     box-shadow: $box-shadow;
     transition: $transition;
     border-radius: $radius;
-    animation: show .7s;
   }
 
   .dark .card {
