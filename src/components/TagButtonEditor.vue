@@ -26,7 +26,8 @@ export default {
   props: ['tags', 'newTag'],
   methods: {
     createTag(tag) {
-      this.$emit('createTag', tag);
+      if(tag.length > 0) this.$emit('createTag', tag);
+      else alert('빈 태그는 만들 수 없습니다.');
     },
     changeNewTag(e) {
       this.$emit('changeTag', e.target.value);
