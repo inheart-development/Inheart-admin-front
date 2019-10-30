@@ -1,5 +1,5 @@
 <template>
-  <modal :is_open="isOpen">
+  <modal>
     <div>
       <card id="inner-space" class="notice-content-wrapper">
         <h2 class="title">공지사항 등록</h2>
@@ -52,7 +52,6 @@
     props: [],
     data() {
       return {
-        isOpen: true,
         title: '',
         content: '',
         audio: '',

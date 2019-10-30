@@ -1,6 +1,6 @@
 <template>
-  <modal :is_open="isOpen">
-    <div @keypress="validatePressEnterkey">
+  <modal>
+    <div>
       <card id="inner-space" class="notice-content-wrapper">
         <h2 class="title">FAQ 등록</h2>
         <div class="input-item">
