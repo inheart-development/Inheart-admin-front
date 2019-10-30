@@ -3,9 +3,11 @@
     <div class="faq-content">
       <page-header title="FAQ 게시글 관리"/>
       <div class="faq-container">
-        <card class="add-btn" @click="createFaq">
-          추가하기
-        </card>
+        <div @click="openEditor">
+          <card class="add-btn">
+            추가하기
+          </card>
+        </div>
         <faq-card
           v-for="faq in faqs"
           :question="faq.faqQuestion"
@@ -16,6 +18,7 @@
         />
       </div>
     </div>
+    <faq-editor v-if="isEditorOpened" @close-editor="closeEditor" />
   </div>
 </template>
 
@@ -24,17 +27,20 @@
   import pageHeader from '../components/PageHeader.vue';
   import FaqCard from '../components/FaqCard.vue';
   import { getFaqs } from '../lib/faq';
+  import FaqEditor from '../components/FaqEditor';
 
   export default {
     name: 'faq',
     components: {
       Card,
       pageHeader,
-      FaqCard
+      FaqCard,
+      FaqEditor
     },
     data() {
       return {
         faqs: [],
+        isEditorOpened: false,
       };
     },
     methods: {
@@ -47,7 +53,11 @@
           console.log(e);
         }
       },
-      createFaq() {
+      openEditor() {
+        this.isEditorOpened = true;
+      },
+      closeEditor() {
+        this.isEditorOpened = false;
       }
     },
     mounted() {
