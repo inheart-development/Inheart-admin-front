@@ -27,5 +27,6 @@ export default {
 
 .page-wrapper {
   flex: 1;
+  margin-left: 250px;
 }
 </style>

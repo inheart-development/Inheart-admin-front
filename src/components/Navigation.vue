@@ -34,6 +34,10 @@ export default {
           route: 'content'
         },
         {
+          name: '앨범 관리',
+          route: 'album'
+        },
+        {
           name: 'FAQ 게시글 관리',
           route: 'faq'
         },
@@ -55,9 +59,9 @@ export default {
 
 <style scoped>
 .navigation {
+  position: fixed;
   width: 250px;
-  min-height: 100vh;
-  height:100%;
+  height: 100vh;
   background: #393c65;
   color: #fff;
   padding: 0 20px;
