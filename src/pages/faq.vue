@@ -3,11 +3,9 @@
     <div class="faq-content">
       <page-header title="FAQ 게시글 관리"/>
       <div class="faq-container">
-        <div @click="openEditor">
-          <card class="add-btn">
-            추가하기
-          </card>
-        </div>
+        <card @click="openEditor" class="add-btn">
+          추가하기
+        </card>
         <faq-card
           v-for="faq in faqs"
           :question="faq.faqQuestion"
