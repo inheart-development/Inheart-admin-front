@@ -18,7 +18,7 @@
                   placeholder="제목"
                   type="text"
                   v-model="title"
-                  autocomplete=”off”
+                  autocomplete="off"
                 >
               </div>
               <div class="input-item">
@@ -29,7 +29,7 @@
                   placeholder="설명"
                   type="text"
                   v-model="explain"
-                  autocomplete=”off”
+                  autocomplete="off"
                 >
               </div>
               <div v-if="selected !== 4" class="input-item">
@@ -82,7 +82,6 @@
     data() {
       return {
         isOpen: true,
-        selected: '카테고리',
         title: '',
         explain: '',
         audio: '',
