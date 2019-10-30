@@ -1,9 +1,8 @@
 <template>
-  <div class="normal-button-wrapper">
+  <div class="normal-button-wrapper" @click="clickButton(index)">
     <div 
       class="button-list-item normal-button"
       :class="isSelected && 'selected-item'"
-      @click="clickButton(index)"
     >{{content}}</div>
   </div>
 </template>
