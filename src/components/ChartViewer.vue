@@ -6,9 +6,14 @@
         :key="index"
         :content="content"
         :index="index"
-        :is-selected="selectedButton === index"
+        :is-selected="selectedStatistics === index"
         @change-selected-button="changeSelectedButton"
       />
+    </div>
+    <div class="chart-controller">
+      <img src="../assets/ic_keyboard_arrow_left.svg" alt="arrow_left" @click="changeCurrentPoint(-1)">
+      <p class="current-point">{{currentPoint}}</p>
+      <img src="../assets/ic_keyboard_arrow_right.svg" alt="arrow_right" @click="changeCurrentPoint(1)">
     </div>
     <div class="chart-wrapper">
       <line-chart
@@ -28,7 +33,7 @@
 
   export default {
     name: 'chart-viewer',
-    props: [],
+    props: ['labels', 'datasetArray', 'selectedStatistics', 'currentPoint'],
     components: {
       Card,
       LineChart,
@@ -36,13 +41,17 @@
     },
     data() {
       return {
-        buttons: ['연 단위', '월 단위', '일 단위'],
-        selectedButton: 0,
-        datasetArray: [],
-        labels: [],
+        buttons: ['월 단위', '일 단위', '시간 단위'],
         options: {
           responsive: true,
-          maintainAspectRatio: false
+          maintainAspectRatio: false,
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true,
+              }
+            }]
+          }
         },
         dataset: {
           label: '사용량',
@@ -52,7 +61,10 @@
     },
     methods: {
       changeSelectedButton(index) {
-        this.selectedButton = index;
+        this.$emit('change-statistics-type', index);
+      },
+      changeCurrentPoint(coefficient) {
+        this.$emit('change-current-point', coefficient);
       }
     },
   };
@@ -66,5 +78,22 @@
 
 .chart-wrapper {
   width: 100%;
+}
+
+.chart-controller {
+  display: flex;
+  align-items: center;
+}
+
+.chart-controller > img{
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.current-point {
+  font-size: 1.5em;
+  width: 6em;
+  text-align: center;
 }
 </style>
