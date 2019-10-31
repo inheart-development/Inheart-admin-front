@@ -1,61 +1,24 @@
 import axios from 'axios';
+import { baseUrl } from './setting';
 
-const baseUrl = 'http://54.180.153.125:3000/api/admin';
+const contentBaseUrl = `${baseUrl}/meditation`;
 
-export const getAllContent = () => axios.get(`${baseUrl}/contents/list`);
-
-export const getCategoryContent = ({ categoryNo }) => axios.get(`${baseUrl}/contents/category/list`, {
-  params: {
-    categoryNo,
-  },
+export const getMeditations = () => axios.get(`${contentBaseUrl}/list`);
+export const getDetailMeditation = meditationNo => axios.get(`${contentBaseUrl}`, {
+  params: meditationNo
 });
-
-export const getDetailContent = ({ contentsNo }) => axios.get(`${baseUrl}/contents`, {
-  params: {
-    contentsNo,
-  },
-});
-
-const createSoundContent = formData => axios.post(`${baseUrl}/contents/sound`, formData, {
+export const addMeditation = formdata => axios.post(`${contentBaseUrl}`, formdata, {
   headers: {
-    'Content-Type': 'multipart/form-data',
-  },
-});
-
-const createTextcontent = formData => axios.post(`${baseUrl}/contents/text`, formData, {
-  headers: {
-    'Content-Type': 'multipart/form-data',
-  },
-});
-
-export const postNewContent = ({ formData, contentType }) => {
-  if (contentType === 'sound') {
-    return createSoundContent(formData);
+    'Content-Type': 'multipart/form-data'
   }
-  return createTextcontent(formData);
-};
-
-const modifyTextContent = formData => axios.put(`${baseUrl}/contents/text`, formData, {
-  headers: {
-    'Content-Type': 'multipart/form-data',
-  },
 });
-
-const modifySoundContent = formData => axios.put(`${baseUrl}/contents/sound`, formData, {
+export const modifyMeditation = formdata => axios.put(`${contentBaseUrl}`, formdata, {
   headers: {
-    'Content-Type': 'multipart/form-data',
-  },
-});
-
-export const modifyContent = ({ formData, contentType }) => {
-  if (contentType === 'sound') {
-    return modifySoundContent(formData);
+    'Content-Type': 'multipart/form-data'
   }
-  return modifyTextContent(formData);
-};
-
-export const deleteContent = ({ contentsNo }) => axios.delete(`${baseUrl}/contents`, {
+});
+export const deleteMeditation = meditationNo => axios.delete(`${contentBaseUrl}`, {
   data: {
-    contentsNo,
-  },
+    meditationNo
+  } 
 });
