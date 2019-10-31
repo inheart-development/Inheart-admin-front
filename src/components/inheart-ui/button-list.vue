@@ -1,6 +1,7 @@
 <template>
   <ul class="button-list">
-    <li :class="[getItemStyle(index), getThemeClass]"
+    <li 
+        :class="isSelected(index) ? 'selected-item' : ''"
         :key="index"
         @click="itemClicked(index)"
         class="button-list-item"
@@ -13,35 +14,15 @@
 <script>
   export default {
     name: 'button-list',
-    props: ['items', 'list_name'],
-    data() {
-      return {
-        selected_items: [],
-        itemStyle: []
-      }
-    }, computed: {
-      getThemeClass() {
-        return '';
-      }
-    },
+    props: ['items', 'selectedItems'],
     methods: {
-      getItemStyle(index) {
-        return this.itemStyle[index];
-      },
       itemClicked(index) {
-        const theme = 'selected-item';
-        if (this.selected_items.includes(index)) {
-          this.selected_items = this.selected_items.filter(value => value !== index);
-          this.$set(this.itemStyle, index, '');
-        } else {
-          this.selected_items.push(index);
-          this.$set(this.itemStyle, index, theme);
-        }
-        this.$store.dispatch('setLastSelected', {name: this.list_name, value: this.selected_items});
-        this.$emit('change', this.selected_items);
+        this.$emit('tag-click', index);
       },
-    }, mounted() {
-      this.itemStyle = [...new Array(this.items.length)].map(() => '');
+      isSelected(index) {
+        console.log(this.selectedItems.some(selected => selected === index));
+        return this.selectedItems.some(selected => selected === index);
+      }
     }
   }
 </script>

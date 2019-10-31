@@ -15,7 +15,7 @@
 
 <script>
   import { stringEllipsis } from '../utils';
-  import { deleteContent } from '../lib/content';
+  import { deleteMeditation } from '../lib/content';
   import Card from './inheart-ui/card';
   import FloatingButton from './inheart-ui/floatingButton';
 
@@ -39,7 +39,7 @@
         // eslint-disable-next-line
         if (confirm('컨텐츠를 삭제하시겠습니까?')) {
           try {
-            await deleteContent({ contentsNo: this.contentNo });
+            await deleteMeditation({ meditationNo: this.contentNo });
             this.$emit('update');
             // eslint-disable-next-line
             alert('컨텐츠가 삭제되었습니다.');

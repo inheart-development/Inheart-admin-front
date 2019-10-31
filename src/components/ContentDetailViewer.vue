@@ -32,7 +32,7 @@
                   autocomplete="off"
                 >
               </div>
-              <div v-if="selected !== 4" class="input-item">
+              <div class="input-item">
                 <label class="custom-label login-label" for="audio">오디오</label>
                 <input type="file" ref="content" @change="handleFileUpload(setContent, 'content')" id="audio"/>
               </div>
@@ -45,8 +45,7 @@
                   @change="handleFileUpload(setCover, 'cover')"
                 />
               </div>
-              <img class="preview" v-if="coverImageUrl !== '' && selected !== 4" :src="coverImageUrl"/>
-              <div class="preview" v-if="coverImageUrl === '' && selected !== 4">미리보기</div>
+              <div class="preview" v-if="coverImageUrl === ''">미리보기</div>
             </div>
           </div>
         </div>
@@ -78,7 +77,7 @@
       ButtonList,
       TagButtonEditor
     },
-    props: ['postType', 'detailPost'],
+    props: ['postType', 'id'],
     data() {
       return {
         isOpen: true,
@@ -88,7 +87,6 @@
         coverImage: '',
         coverImageUrl: '',
         text: '',
-        id: '',
         tags: [],
         newTag: '',
       };
@@ -151,60 +149,6 @@
           this.onCloseViewer();
         }
       },
-      async onCreateContent() {
-        try {
-          const form = new FormData();
-          const contentType = this.selected !== 4 ? 'sound' : 'text';
-          form.append('categoryNo', this.selected);
-          form.append('contentsTitle', this.title);
-          form.append('contentsExplain', this.explain);
-          form.append('contentsType', contentType);
-          if (this.selected !== 4) {
-            form.append('cover', this.coverImage);
-            form.append('sound', this.audio);
-          } else {
-            form.append('text', this.text);
-          }
-          await postNewContent({
-            formData: form,
-            contentType
-          });
-          this.$emit('update');
-          // eslint-disable-next-line
-          alert('컨텐츠가 생성되었습니다.');
-        } catch (e) {
-          // eslint-disable-next-line
-          console.log(e);
-        }
-      },
-      async onModifyContent() {
-        try {
-          const form = new FormData();
-          const contentType = this.selected !== 4 ? 'sound' : 'text';
-          console.log(contentType);
-          form.append('contentsNo', this.id);
-          form.append('categoryNo', this.selected);
-          form.append('contentsTitle', this.title);
-          form.append('contentsExplain', this.explain);
-          form.append('contentsType', contentType);
-          if (this.selected !== 4) {
-            form.append('cover', this.coverImage);
-            form.append('sound', this.audio);
-          } else {
-            form.append('text', this.text);
-          }
-          await modifyContent({
-            formData: form,
-            contentType
-          });
-          this.$emit('update');
-          // eslint-disable-next-line
-          alert('컨텐츠가 수정되었습니다.');
-        } catch (e) {
-          // eslint-disable-next-line
-          console.log(e);
-        }
-      },
       validatePressEnterkey(e) {
         if (e.keyCode === 13) {
           this.onSavePost();
@@ -212,34 +156,8 @@
       },
     },
     watch: {
-      detailPost: {
-        handler(newValue) {
-          const {
-            categoryNo,
-            contentsTitle,
-            contentsExplain,
-            contents,
-            contentsNo,
-          } = newValue;
-          this.selected = categoryNo;
-          this.title = contentsTitle;
-          this.explain = contentsExplain;
-          this.audio = contents;
-          this.id = contentsNo;
-        },
-      },
     },
     mounted() {
-      if (this.postType === 'modify') {
-        const {
-          categoryNo, contentsTitle, contentsExplain, contents, contentsNo,
-        } = this.detailPost;
-        this.selected = categoryNo;
-        this.title = contentsTitle;
-        this.explain = contentsExplain;
-        this.audio = contents;
-        this.id = contentsNo;
-      }
     },
   };
 </script>

@@ -9,11 +9,11 @@
           </card>
         </div>
         <content-preview-card
-          v-for="(data, i) in currentContent"
-          :key="i"
-          :contentNo="data.contentsNo"
-          :contentTitle="data.contentsTitle"
-          :contentExplain="data.contentsExplain"
+          v-for="data in meditations"
+          :key="data.meditationNo"
+          :contentNo="data.meditationNo"
+          :contentTitle="data.meditationTitle"
+          :contentExplain="data.meditationExplain"
           @modify-content="modifyContent"
           @update="update"
         />
@@ -34,10 +34,10 @@
   import CategoryButton from '../components/utils/CategoryButton.vue';
   import ContentPreviewCard from '../components/ContentPreviewCard.vue';
   import ContentDetailViewer from '../components/ContentDetailViewer.vue';
-  import { getAllContent, getDetailContent } from '../lib/content';
   import Card from '../components/inheart-ui/card';
   import topNavigation from '../components/inheart-ui/topNavigation';
   import buttonList from '../components/inheart-ui/button-list'
+  import { getMeditations, getDetailMeditation } from '../lib/content';
 
   export default {
     name: 'contents',
@@ -50,16 +50,11 @@
       topNavigation,
       buttonList
     },
-    computed: {
-      currentContent() {
-        return this.allContent.filter(val => val.categoryNo === this.selectedCategory + 1);
-      },
-    },
     data() {
       return {
         tags: ['잔잔한', '평온한', '따뜻한', '시원한', '행복한', '기쁜', '긍정적인'],
         isDrawerOpened: false,
-        allContent: [],
+        meditations: [],
         isViewerOpen: false,
         postType: 'create',
         detailContent: {},
@@ -71,7 +66,7 @@
         this.openViewer();
       },
       modifyContent(contentNo) {
-        this.getDetailContentData(contentNo);
+        this.updateDetailMeditaion(contentNo);
         this.postType = 'modify';
         this.openViewer();
       },
@@ -81,26 +76,18 @@
       closeViewer() {
         this.isViewerOpen = false;
       },
-      async getAllContentData() {
-        try {
-          const response = await getAllContent();
-          this.allContent = response.data.data;
-        } catch (e) {
-          // eslint-disable-next-line
-          console.log(e);
-        }
+      async updateMeditations() {
+        const response = await getMeditations();
+        const { data } = response;
+        this.meditations = data.data;
       },
-      async getDetailContentData(contentsNo) {
-        try {
-          const response = await getDetailContent({ contentsNo });
-          this.detailContent = response.data.data;
-        } catch (e) {
-          // eslint-disable-next-line
-          console.log(e);
-        }
+      async updateDetailMeditaion(contentNo) {
+        const response = await getDetailMeditation(contentNo);
+        const { data } = response;
+        this.detailContent = data.data;
       },
       update() {
-        this.getAllContentData();
+        this.updateMeditations()
       },
     },
     mounted() {
@@ -118,7 +105,6 @@
 
   .container {
     overflow: auto;
-    padding: 10px 10px 30px 10px;
     min-height: 100vh;
   }
 

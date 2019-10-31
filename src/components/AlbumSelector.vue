@@ -10,14 +10,14 @@
         class="meditation-card custom-card"
         v-for="meditation in meditations"
         :key="meditation.id"
-        :class="isSelectedCard(meditation.id) && 'selected'"
-        @click="selectMeditation(meditation.id)"
+        :class="isSelectedCard(meditation.meditationNo) && 'selected'"
+        @click="selectMeditation(meditation.meditationNo)"
       >
         <div class="meditation-card-description">
-          <p class="title">{{meditation.title}}</p>
-          <p>{{meditation.content}}</p>
+          <p class="title">{{meditation.meditationTitle}}</p>
+          <p>{{meditation.meditationExplain}}</p>
         </div>
-        <img class="meditaiton-card-cover" :src="meditation.cover" alt="커버 이미지" />
+        <img class="meditaiton-card-cover" :src="meditation.meditationCover" alt="커버 이미지" />
       </card>
     </div>
   </div>

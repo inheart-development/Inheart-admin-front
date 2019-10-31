@@ -54,64 +54,18 @@
   import { getMeditations, getDetailMeditation } from '../lib/content';
   import { addAlbum, getDetailAlbum, modifyAlbum } from '../lib/album';
   export default {
-    name: 'edit-album',
-    props: ['albumNo'],
+    name: 'edit-notice',
+    props: [''],
     components: { Card, pageHeader, AlbumSelector },
     data() {
       return {
-        selectedMeditations: [],
-        albumTitle: '',
-        albumExplain: '',
-        meditations: null
       }
     },
     computed: {
-      isOnModifynig() {
-        return !!this.albumNo;
-      }
     },
     methods: {
-      selectMeditation(id) {
-        const index = this.selectedMeditations.indexOf(id)
-        console.log(index)
-        if(index >= 0) this.selectedMeditations = this.selectedMeditations.filter(val => val !== id);
-        else this.selectedMeditations = [...this.selectedMeditations, id];
-      },
-      async updateMeditations() {
-        const response = await getMeditations();
-        const { data } = response;
-        this.meditations = data.data;
-      },
-      async updateAddAlbum() {
-        await addAlbum({
-          albumTitle: this.albumTitle,
-          albumExplain: this.albumExplain,
-          meditationList: this.selectedMeditations
-        })
-        this.$router.push('album');
-      },
-      async updateModifyAlbum() {
-        await modifyAlbum({
-          albumTitle: this.albumTitle,
-          albumExplain: this.albumExplain,
-          meditationList: this.selectedMeditations,
-          albumNo: this.albumNo
-        });
-        this.$router.push('album');
-      },
-      async updateAlbumInfo() {
-        const response = await getDetailAlbum(this.albumNo);
-        const { data } = response;
-        this.albumTitle = data.data.albumTitle;
-        this.albumExplain = data.data.albumExplain;
-        this.selectedMeditations = data.data.selectedMeditations || [];
-      }
     },
     mounted() {
-      this.updateMeditations();
-      if(this.isOnModifynig) {
-        this.updateAlbumInfo()
-      }
     },
   };
 </script>
@@ -144,7 +98,4 @@
   font-weight: 300;
 }
 
-textarea {
-    resize: none;
-  }
 </style>

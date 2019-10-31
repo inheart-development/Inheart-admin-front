@@ -6,13 +6,13 @@
         <card class="counter">
           <div class="inner-container">
             <h3>총 접속</h3>
-            <h2>{{totalData}}회</h2>
+            <h2>{{totalCnt}} 회</h2>
           </div>
         </card>
         <card class="counter">
           <div class="inner-container">
             <h3>일평균 접속</h3>
-            <h2>{{averageCount}}회</h2>
+            <h2>{{avgCount}} 회</h2>
           </div>
         </card>
       </div>
@@ -31,7 +31,7 @@
 <script>
 import moment from 'moment'; 
 import pageHeader from '../components/PageHeader.vue';
-import { getYearlyStatistics, getMonthlyStatistics, getdailyStatistics } from '../lib/statistics';
+import { getYearlyStatistics, getMonthlyStatistics, getdailyStatistics, getConnectionCount } from '../lib/statistics';
 import LineChart from '../components/LineChart.vue';
 import Card from '../components/inheart-ui/card';
 import ChartViewer from '../components/ChartViewer';
@@ -52,21 +52,15 @@ export default {
       },
       datasetArray: [],
       labels: [],
-      totalData: '',
-      totalDay: 1,
+      totalCnt: 0,
+      avgCount: 0,
       currentPoint: moment(),
       showingPoint: moment().format('YYYY'),
       selectedStatistics: 0,
     };
   },
-  computed: {
-    averageCount() {
-      return Math.floor(this.totalData / this.totalDay);
-    }
-  },
   watch: {
     selectedStatistics() {
-      console.log(1)
       this.updateSwitcher(this.selectedStatistics);
     }
   },
@@ -87,7 +81,6 @@ export default {
       else return `0${index+1}월`
     },
     changeCurrentPoint(coefficient) {
-      console.dir(this.currentPoint)
       switch(this.selectedStatistics) {
         case 0:
           this.currentPoint = Object.assign(this.currentPoint.add(coefficient, 'y'));
@@ -102,19 +95,6 @@ export default {
           break;
       }
       this.updateSwitcher(this.selectedStatistics)
-      console.dir(this.currentPoint)
-    },
-    async getDailyData() {
-      const response = await getDailyConnect();
-      const days = data.map(val => val.day.substring(0, 10));
-      const datasetData = data.map(val => val.count);
-      this.labels = days;
-      this.$set(this, 'datasetArray', datasetData);
-      this.totalDay = datasetData.length;
-    },
-    async getTotalData() {
-      const response = await getTotalConnect();
-      this.totalData = response.data.data.count;
     },
     updateSwitcher(statisticsNum) {
       switch(statisticsNum) {
@@ -155,10 +135,17 @@ export default {
       this.datasetArray = data;
       console.log(data);
     },
+    async updateConnectCount() {
+      const response = await getConnectionCount();
+      const { data } = response;
+      this.totalCnt = data.data.totalCnt;
+      this.avgCount = data.data.avgCount;
+    }
   },
   mounted() {
     console.dir(moment().add(1, 'd'))
     this.updateSwitcher(this.selectedStatistics);
+    this.updateConnectCount();
   },
 };
 </script>

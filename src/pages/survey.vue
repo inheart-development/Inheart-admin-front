@@ -64,7 +64,6 @@
 
   .container {
     overflow: auto;
-    padding: 10px 10px 30px 10px;
     min-height: 100vh;
   }
 </style>
