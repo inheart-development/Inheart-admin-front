@@ -52,7 +52,7 @@ export default new Router({
       path: '/edit-album',
       name: 'edit-album',
       component: EditAlbum,
-      props: (route) => ({ modify: route.query.modify })
+      props: (route) => ({ albumNo: route.query.albumNo })
     }
   ],
 });
