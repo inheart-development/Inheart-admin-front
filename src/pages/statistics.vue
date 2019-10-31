@@ -16,80 +16,151 @@
           </div>
         </card>
       </div>
-      <card class="statistics-card">
-        <div class="statistics-container">
-          <div class="statistics-viewer">
-            <line-chart
-              :labels="labels"
-              :dataset="dataset"
-              :dataarray="datasetArray"
-              :options="options"
-            />
-          </div>
-          <!-- <div class="total-count">총 접속횟수: {{totalData}}회</div> -->
-        </div>
-      </card>
+      <chart-viewer
+        :labels="labels"
+        :datasetArray="datasetArray"
+        @change-statistics-type="changeStatisticsType"
+        :selectedStatistics="selectedStatistics"
+        :currentPoint="showingPoint"
+        @change-current-point="changeCurrentPoint"
+      />
     </div>
   </div>
 </template>
 
 <script>
-  import pageHeader from '../components/PageHeader.vue';
-  import { getDailyConnect, getTotalConnect } from '../lib/statistics';
-  import LineChart from '../components/LineChart.vue';
-  import Card from '../components/inheart-ui/card';
+import moment from 'moment'; 
+import pageHeader from '../components/PageHeader.vue';
+import { getYearlyStatistics, getMonthlyStatistics, getdailyStatistics } from '../lib/statistics';
+import LineChart from '../components/LineChart.vue';
+import Card from '../components/inheart-ui/card';
+import ChartViewer from '../components/ChartViewer';
 
-  export default {
-    name: 'statistics',
-    components: {
-      Card,
-      pageHeader,
-      LineChart
+export default {
+  name: 'statistics',
+  components: {
+    Card,
+    pageHeader,
+    LineChart,
+    ChartViewer
+  },
+  data() {
+    return {
+      dataset: {
+        label: '사용량',
+        backgroundColor: 'rgba(231,76,60, 0.3)',
+      },
+      datasetArray: [],
+      labels: [],
+      totalData: '',
+      totalDay: 1,
+      currentPoint: moment(),
+      showingPoint: moment().format('YYYY'),
+      selectedStatistics: 0,
+    };
+  },
+  computed: {
+    averageCount() {
+      return Math.floor(this.totalData / this.totalDay);
+    }
+  },
+  watch: {
+    selectedStatistics() {
+      console.log(1)
+      this.updateSwitcher(this.selectedStatistics);
+    }
+  },
+  methods: {
+    changeStatisticsType(index) {
+      this.selectedStatistics = index;
     },
-    data() {
-      return {
-        dataset: {
-          label: '사용량',
-          backgroundColor: 'rgba(231,76,60, 0.3)',
-        },
-        datasetArray: [],
-        labels: [],
-        totalData: '',
-        options: {
-          responsive: true,
-          maintainAspectRatio: false
-        },
-        totalDay: 1
-      };
+    getDailyLabel(index) {
+      if(index >= 9) return `${index}시`
+      else return `0${index}시`
     },
-    computed: {
-      averageCount() {
-        return Math.floor(this.totalData / this.totalDay);
+    getMonthlyLabel(index) {
+      if(index >= 9) return `${index+1}일`
+      else return `0${index+1}일`
+    },
+    getYearlyLabel(index) {
+      if(index >= 9) return `${index+1}월`
+      else return `0${index+1}월`
+    },
+    changeCurrentPoint(coefficient) {
+      console.dir(this.currentPoint)
+      switch(this.selectedStatistics) {
+        case 0:
+          this.currentPoint = Object.assign(this.currentPoint.add(coefficient, 'y'));
+          break;
+        case 1:
+          this.currentPoint = Object.assign(this.currentPoint.add(coefficient, 'M'));
+          break;
+        case 2:
+          this.currentPoint = Object.assign(this.currentPoint.add(coefficient, 'd'));
+          break;
+        default:
+          break;
+      }
+      this.updateSwitcher(this.selectedStatistics)
+      console.dir(this.currentPoint)
+    },
+    async getDailyData() {
+      const response = await getDailyConnect();
+      const days = data.map(val => val.day.substring(0, 10));
+      const datasetData = data.map(val => val.count);
+      this.labels = days;
+      this.$set(this, 'datasetArray', datasetData);
+      this.totalDay = datasetData.length;
+    },
+    async getTotalData() {
+      const response = await getTotalConnect();
+      this.totalData = response.data.data.count;
+    },
+    updateSwitcher(statisticsNum) {
+      switch(statisticsNum) {
+        case 0:
+          this.showingPoint = this.currentPoint.format('YYYY');
+          this.updateYearlyStatistics(this.showingPoint);
+          return;
+        case 1:
+          this.showingPoint = this.currentPoint.format('YYYY-MM')
+          this.updateMonthlyStatistics(this.showingPoint);
+          return;
+        case 2:
+          this.showingPoint = this.currentPoint.format('YYYY-MM-DD')
+          this.updateDailyStatistics(this.showingPoint);
+          return;
+        default:
+          return;
       }
     },
-    methods: {
-      async getDailyData() {
-        const response = await getDailyConnect();
-        const { data } = response.data;
-        const days = data.map(val => val.day.substring(0, 10));
-        const datasetData = data.map(val => val.count);
-        this.labels = days;
-        this.$set(this, 'datasetArray', datasetData);
-        this.totalDay = datasetData.length;
-      },
-      async getTotalData() {
-        const response = await getTotalConnect();
-        this.totalData = response.data.data.count;
-      },
-      async updataData() {
-        this.getDailyData();
-        this.getTotalData();
-      },
+    async updateDailyStatistics(date) {
+      const response = await getdailyStatistics(date);
+      const { data } = response.data;
+      this.labels = data.map((val, i) => this.getDailyLabel(i));
+      this.datasetArray = data
+      console.log(data);
     },
-    created() {
-      this.updataData();
+    async updateMonthlyStatistics(date) {
+      const response = await getMonthlyStatistics(date);
+      const { data } = response.data;
+      this.labels = data.map((val, i) => this.getMonthlyLabel(i));
+      this.datasetArray = data;
+      console.log(data);
     },
-  };
+    async updateYearlyStatistics(date) {
+      const response = await getYearlyStatistics(date);
+      const { data } = response.data;
+      this.labels = data.map(((val, i) => this.getYearlyLabel(i)));
+      this.datasetArray = data;
+      console.log(data);
+    },
+  },
+  mounted() {
+    console.dir(moment().add(1, 'd'))
+    this.updateSwitcher(this.selectedStatistics);
+  },
+};
 </script>
 
 <style scoped>
