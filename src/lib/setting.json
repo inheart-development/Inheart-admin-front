@@ -1,3 +1,4 @@
 {
-    "baseUrl": "http://13.124.160.239/admin"
+    "baseUrl": "http://13.124.160.239/admin",
+    "staticFileUrl": "http://inheart.midasit.com/public/resources"
 }

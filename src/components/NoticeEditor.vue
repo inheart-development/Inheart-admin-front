@@ -110,7 +110,6 @@
     height: 60px;
     font-size: 20px;
     cursor: pointer;
-    width: 100%;
   }
 
   .input-item {

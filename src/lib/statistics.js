@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { baseUrl } from './setting';
+axios.defaults.withCredentials = true
 
 const statisticsBaseUrl = `${baseUrl}/statistics`;
 

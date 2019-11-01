@@ -9,6 +9,9 @@ import Index from './pages/index.vue';
 import Notice from './pages/notice.vue';
 import Album from './pages/album';
 import EditAlbum from './pages/editAlbum';
+import EditFaq from './pages/editFaq';
+import EditMeditaion from './pages/editMeditation';
+import EditNotice from './pages/editNotice';
 
 Vue.use(Router);
 
@@ -20,19 +23,16 @@ export default new Router({
       path: '/statistics',
       name: 'statistics',
       component: Statistics,
-    },
-    {
+    }, {
       path: '/signin',
       name: 'signin',
       component: Signin,
       alias: '/',
-    },
-    {
+    }, {
       path: '/content',
       name: 'content',
       component: Content,
-    },
-    {
+    }, {
       path: '/faq',
       name: 'faq',
       component: Faq,
@@ -53,6 +53,21 @@ export default new Router({
       name: 'edit-album',
       component: EditAlbum,
       props: (route) => ({ albumNo: route.query.albumNo })
+    }, {
+      path: '/edit-faq',
+      name: 'edit-faq',
+      component: EditFaq,
+      props: (route) => ({ faqNo: route.query.faqNo })
+    }, {
+      path: '/edit-meditation',
+      name: 'edit-meditation',
+      component: EditMeditaion,
+      props: (route) => ({ meditationNo: route.query.meditationNo })
+    }, {
+      path: '/edit-notice',
+      name: 'edit-notice',
+      component: EditNotice,
+      props: (route) => ({ noticeNo: route.query.noticeNo })
     }
   ],
 });

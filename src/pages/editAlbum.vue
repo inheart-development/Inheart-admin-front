@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <page-header :title="isOnModifynig ? '앨범 수정' : '앨범 생성'"/>
+    <page-header :title="isOnModifying ? '앨범 수정' : '앨범 생성'"/>
     <div>
       <card class="edit-album-container">
         <h2 class="title">앨범</h2>
@@ -28,14 +28,16 @@
         </div>
         <album-selector
           @select-meditation="selectMeditation"
+          @change-query="onChangeQuery"
           :selectedMeditations="selectedMeditations"
           :meditations="meditations"
+          :query="query"
         />
       </card>
       <div class="button-container">
         <div class="btn-card-container">
-          <card v-if="!isOnModifynig" class="btn-card" @click="updateAddAlbum">업로드</card>
-          <card v-if="isOnModifynig" class="btn-card" @click="updateModifyAlbum">업로드</card>
+          <card v-if="!isOnModifying" class="btn-card" @click="updateAddAlbum">업로드</card>
+          <card v-if="isOnModifying" class="btn-card" @click="updateModifyAlbum">업로드</card>
         </div>
         <div class="btn-card-container">
           <router-link to="/album">
@@ -53,6 +55,7 @@
   import AlbumSelector from '../components/AlbumSelector';
   import { getMeditations, getDetailMeditation } from '../lib/content';
   import { addAlbum, getDetailAlbum, modifyAlbum } from '../lib/album';
+  import { searchMeditation } from '../lib/content';
   export default {
     name: 'edit-album',
     props: ['albumNo'],
@@ -62,15 +65,20 @@
         selectedMeditations: [],
         albumTitle: '',
         albumExplain: '',
-        meditations: null
+        meditations: null,
+        query: '',
       }
     },
     computed: {
-      isOnModifynig() {
+      isOnModifying() {
         return !!this.albumNo;
       }
     },
     methods: {
+      onChangeQuery(query) {
+        this.query = query;
+        this.updateMeditations();
+      },
       selectMeditation(id) {
         const index = this.selectedMeditations.indexOf(id)
         console.log(index)
@@ -78,7 +86,7 @@
         else this.selectedMeditations = [...this.selectedMeditations, id];
       },
       async updateMeditations() {
-        const response = await getMeditations();
+        const response = await searchMeditation(this.query);
         const { data } = response;
         this.meditations = data.data;
       },
@@ -104,12 +112,13 @@
         const { data } = response;
         this.albumTitle = data.data.albumTitle;
         this.albumExplain = data.data.albumExplain;
-        this.selectedMeditations = data.data.selectedMeditations || [];
-      }
+        this.selectedMeditations = data.data.meditationList;
+      },
+
     },
     mounted() {
       this.updateMeditations();
-      if(this.isOnModifynig) {
+      if(this.isOnModifying) {
         this.updateAlbumInfo()
       }
     },

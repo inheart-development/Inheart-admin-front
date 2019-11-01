@@ -1,16 +1,14 @@
 import axios from 'axios';
+import { baseUrl } from './setting';
+axios.defaults.withCredentials = true
 
-const baseUrl = 'http://54.180.153.125:3000/api/admin';
+const faqBaseUrl = `${baseUrl}/faq`;
 
-export const getFaqs = () => axios.get(`${baseUrl}/faq/list`);
-
-export const modifyFaq = ({ question, answer, index }) => axios.put(`${baseUrl}/faq`, {
-  faqQuestion: question,
-  faqAnswer: answer,
-  faqNo: index,
-});
-
-export const deleteFaq = ({ index }) => axios.delete(`${baseUrl}/faq`, {
+export const getFaqs = () => axios.get(`${faqBaseUrl}/list`);
+export const getDetailFaq = faqNo => axios.get(`${faqBaseUrl}`, { params: { faqNo }});
+export const addFaq = faq => axios.post(`${faqBaseUrl}`, faq);
+export const modifyFaq = faq => axios.put(`${faqBaseUrl}`, faq);
+export const deleteFaq = index => axios.delete(`${faqBaseUrl}`, {
   data: {
     faqNo: index,
   },

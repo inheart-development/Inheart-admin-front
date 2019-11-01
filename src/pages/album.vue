@@ -1,5 +1,5 @@
 <template>
-  <div class="container flex-center">
+  <div class="container">
 		<div>
 			<page-header title="앨범 관리"/>
       <router-link to="edit-album">
@@ -19,7 +19,18 @@
             <p class="title">{{album.albumTitle}}</p>
             <p>{{album.albumExplain}}</p>
           </div>
-          <img src="../assets/ic_delete.png" alt="delete" @click="updateDeleteAlbum($event, album.albumNo)">
+          <img
+            class="star"
+            :src="album.isRecommend ? require('../assets/ic_star.svg') : require('../assets/ic_star_border.svg')"
+            alt="star"
+            @click="changeAlbumRecommend($event, album.albumNo, album.isRecommend)"
+          >
+          <img
+            class="delete"
+            src="../assets/ic_delete.png"
+            alt="delete"
+            @click="updateDeleteAlbum($event, album.albumNo)"
+          >
         </card>
       </router-link>
 		</div>
@@ -37,7 +48,7 @@
 	import PageHeader from '../components/PageHeader';
 	import AlbumEditor from '../components/AlbumEditor';
   import AlbumViewer from '../components/AlbumViewer';
-  import { deleteAlbum, getAlbums } from '../lib/album'
+  import { deleteAlbum, getAlbums, addRecommmendAlbum, deleteRecommmendAlbum } from '../lib/album'
 
 	export default {
     name: 'album',
@@ -47,7 +58,7 @@
 				albums: null,
 				isEditorOpened: false,
 				isViewerOpened: false,
-				isOnModifying: false
+        isOnModifying: false,
 			}
 		},
 		methods: {
@@ -60,6 +71,12 @@
         e.preventDefault();
         await deleteAlbum(id);
         await this.updateGetAlbums();
+      },
+      async changeAlbumRecommend(e, id, isRecommend) {
+        e.preventDefault();
+        if(isRecommend) await deleteRecommmendAlbum(id);
+        else await addRecommmendAlbum(id);
+        await this.updateGetAlbums();
       }
     },
     mounted() {
@@ -69,6 +86,12 @@
 </script>
 
 <style scoped>
+.container {
+  height: 100vh;
+  overflow: auto;
+  padding-bottom: 20px;
+}
+
 .album-card {
 	min-height: 100px;
 	height: auto;
@@ -80,7 +103,16 @@
 
 .album-card img {
   position: absolute;
+  height: 30px;
+  width: 30px;
+}
+
+.album-card img.delete {
   right: 20px;
+}
+
+.album-card img.star {
+  right: 60px;
 }
 
 .album-description {

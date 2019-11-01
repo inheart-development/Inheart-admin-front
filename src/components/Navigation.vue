@@ -12,12 +12,19 @@
             <img src="../assets/ic_keyboard_arrow_right.png" alt="arrow_right">
           </router-link>
         </li>
+        <li @click="logout">
+          <div class="navigator">
+            <span>로그아웃</span>
+            <img src="../assets/ic_keyboard_arrow_right.png" alt="arrow_right">
+          </div>
+        </li>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
+import { signout } from '../lib/account';
 
 export default {
   name: 'navigation',
@@ -49,10 +56,10 @@ export default {
     };
   },
   methods: {
-  },
-  created() {
-  },
-  mounted() {
+    async logout() {
+      await signout();
+      this.$router.push('/');
+    }
   },
 };
 </script>
@@ -75,7 +82,7 @@ export default {
 }
 
 .logo {
-  height: 40px;
+  height: 30px;
 }
 
 li {

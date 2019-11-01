@@ -3,17 +3,23 @@
     <div class="content-wrapper">
       <div class="content">
         <span class="prefix">Q.</span>
-        <editable-component v-model="localQuestion" :isEditable="isEditable"/>
+        <editable-component v-model="localQuestion" :isEditable="false"/>
       </div>
       <div class="content answer-content">
         <span class="prefix">A.</span>
-        <editable-component v-model="localAnswer" :isEditable="isEditable"/>
+        <editable-component v-model="localAnswer" :isEditable="false"/>
       </div>
       <div class="button-wrapper">
-        <floating-button><img @click="changeEditable(!isEditable)"
-                              :src="!isEditable?`/icon/edit.svg`:`/icon/disturb.svg`" alt="edit"></floating-button>
-        <floating-button v-show="isEditable"><img @click="onClickCheck" src="../../public/icon/check.svg" alt="check"></floating-button>
-        <floating-button><img @click="deleteFaqItem" src="../../public/icon/delete.svg" alt="delete"></floating-button>
+        <floating-button>
+          <img
+            @click="onClickEdit(faqNo)"
+            src="/icon/edit.svg"
+            alt="edit"
+          >
+        </floating-button>
+        <floating-button>
+          <img @click="deleteFaqItem(faqNo)" src="../../public/icon/delete.svg" alt="delete">
+        </floating-button>
       </div>
     </div>
   </card>
@@ -26,8 +32,8 @@
   import FloatingButton from './inheart-ui/floatingButton';
 
   export default {
-    name: 'survey-card',
-    props: ['question', 'answer', 'index'],
+    name: 'faq-card',
+    props: ['question', 'answer', 'faqNo'],
     components: {
       FloatingButton,
       Card,
@@ -35,22 +41,16 @@
     },
     data() {
       return {
-        isEditable: false,
         localQuestion: '',
         localAnswer: '',
       };
     },
     methods: {
-      changeEditable(value) {
-        this.isEditable = value;
-      },
-      async deleteFaqItem() {
+      async deleteFaqItem(index) {
         // eslint-disable-next-line
         if (confirm('게시글을 삭제하시겠습니까?')) {
           try {
-            await deleteFaq({
-              index: this.index,
-            });
+            await deleteFaq(index);
             // eslint-disable-next-line
             alert('faq 삭제!');
             this.$emit('update');
@@ -60,25 +60,8 @@
           }
         }
       },
-      async modifyFaqItem() {
-        // eslint-disable-next-line
-        if (confirm('게시글을 수정하시겠습니까?')) {
-          try {
-            await modifyFaq({
-              question: this.localQuestion,
-              answer: this.localAnswer,
-              index: this.index,
-            });
-            this.$emit('update');
-          } catch (e) {
-            // eslint-disable-next-line
-            console.log(e);
-          }
-        }
-      },
-      onClickCheck() {
-        this.changeEditable(false);
-        this.modifyFaqItem();
+      onClickEdit(id) {
+        this.$router.push(`edit-faq?faqNo=${id}`)
       },
     },
     created() {

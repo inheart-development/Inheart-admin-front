@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { baseUrl } from './setting';
+axios.defaults.withCredentials = true
 
 const contentBaseUrl = `${baseUrl}/album`;
 
@@ -17,5 +18,5 @@ export const deleteAlbum = id => axios.delete(`${contentBaseUrl}`, {
   }
 });
 
-export const addRecommmendAlbum = id => axios.post(`${contentBaseUrl}/recommend`, id);
+export const addRecommmendAlbum = id => axios.post(`${contentBaseUrl}/recommend`, { albumNo: id });
 export const deleteRecommmendAlbum = id => axios.delete(`${contentBaseUrl}/recommend`, { data: { albumNo: id }});

@@ -1,8 +1,8 @@
 <template>
   <div class="album-selector">
     <div class="search-form">
-      <input class="custom-input" type="text" :value="searchWord" placeholder="검색어를 입력해주세요.">
-      <normal-button content="검색" index="2" @click-button="onSearchMeditation"/>
+      <input class="custom-input" type="text" :value="query" @change="onChangeQuery($event)" placeholder="검색어를 입력해주세요.">
+      <normal-button class="search-btn" content="검색" index="2" @click-button="onSearchMeditation"/>
       <p class="selected-number">{{selectedMeditations.length}} 개</p>
     </div>
     <div class="meditation-container">
@@ -33,7 +33,7 @@
       Card,
       NormalButton
     },
-    props: ['selectedMeditations', 'meditations'],
+    props: ['selectedMeditations', 'meditations', 'query'],
     data() {
       return {
         searchWord: ''
@@ -51,12 +51,24 @@
       },
       selectMeditation(id) {
         this.$emit('select-meditation', id);
+      },
+      onChangeQuery(e) {
+        this.$emit('change-query', e.target.value);
       }
     },
   };
 </script>
 
 <style scoped>
+
+.search-btn {
+  cursor: pointer;
+}
+
+.search-btn:focus {
+  margin-top: 1px;
+}
+
 .album-selector {
   width: 100%;
 }

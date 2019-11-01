@@ -10,7 +10,7 @@
     </div>
     <div class="tag-input-container">
       <input class="tag-input" :value="newTag" @change="changeNewTag" type="text" placeholder="태그를 입력해주세요."/>
-      <button class="submit-button" @click="createTag(newTag)">입력</button>
+      <button class="submit-button" @click="createTag(newTag)">추가</button>
     </div>
   </div>
 </template>

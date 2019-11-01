@@ -43,7 +43,7 @@
     components: { Card },
     data() {
       return {
-        id: 'admin@midasIT.com',
+        id: 'sadmin@midasit.com',
         password: '1234',
       };
     },

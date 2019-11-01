@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <page-header :title="isOnModifynig ? '앨범 수정' : '앨범 생성'"/>
+    <page-header :title="isOnModifying ? 'FAQ 수정' : 'FAQ 생성'"/>
     <div>
       <card class="edit-album-container">
-        <h2 class="title">앨범</h2>
+        <h2 class="title">Faq</h2>
         <div class="input-item">
           <label class="custom-label login-label" for="title">제목</label>
           <input
@@ -11,7 +11,7 @@
             id="title"
             placeholder="제목을 입력해주세요."
             type="text"
-            v-model="albumTitle"
+            v-model="faqQuestion"
             autocomplete="off"
           />
         </div>
@@ -22,27 +22,16 @@
             id="content"
             placeholder="내용을 입력해주세요."
             type="text"
-            v-model="albumExplain"
+            v-model="faqAnswer"
             autocomplete="off"
           />
         </div>
-        <album-selector
-          @select-meditation="selectMeditation"
-          :selectedMeditations="selectedMeditations"
-          :meditations="meditations"
-        />
       </card>
-      <div class="button-container">
-        <div class="btn-card-container">
-          <card v-if="!isOnModifynig" class="btn-card" @click="updateAddAlbum">업로드</card>
-          <card v-if="isOnModifynig" class="btn-card" @click="updateModifyAlbum">업로드</card>
-        </div>
-        <div class="btn-card-container">
-          <router-link to="/album">
-            <card class="btn-card">닫기</card>
-          </router-link>
-        </div>
-      </div>
+      <card v-if="!isOnModifying" class="btn-card" @click="updateAddFaq">업로드</card>
+      <card v-if="isOnModifying" class="btn-card" @click="updateModifyFaq">업로드</card>
+      <router-link to="/faq">
+        <card class="btn-card">닫기</card>
+      </router-link>
     </div>
   </div>
 </template>
@@ -50,68 +39,47 @@
 <script>
   import Card from '../components/inheart-ui/card';
   import pageHeader from '../components/PageHeader.vue';
-  import AlbumSelector from '../components/AlbumSelector';
-  import { getMeditations, getDetailMeditation } from '../lib/content';
-  import { addAlbum, getDetailAlbum, modifyAlbum } from '../lib/album';
+  import { addFaq, getDetailFaq, modifyFaq } from '../lib/faq';
   export default {
-    name: 'edit-album',
-    props: ['albumNo'],
-    components: { Card, pageHeader, AlbumSelector },
+    name: 'edit-faq',
+    props: ['faqNo'],
+    components: { Card, pageHeader },
     data() {
       return {
-        selectedMeditations: [],
-        albumTitle: '',
-        albumExplain: '',
-        meditations: null
+        faqQuestion: '',
+        faqAnswer: '',
       }
     },
     computed: {
-      isOnModifynig() {
-        return !!this.albumNo;
+      isOnModifying() {
+        return !!this.faqNo;
       }
     },
     methods: {
-      selectMeditation(id) {
-        const index = this.selectedMeditations.indexOf(id)
-        console.log(index)
-        if(index >= 0) this.selectedMeditations = this.selectedMeditations.filter(val => val !== id);
-        else this.selectedMeditations = [...this.selectedMeditations, id];
-      },
-      async updateMeditations() {
-        const response = await getMeditations();
+      async updateFaq(faqNo) {
+        const response = await getDetailFaq(faqNo);
         const { data } = response;
-        this.meditations = data.data;
+        this.faqQuestion = data.data.faqQuestion;
+        this.faqAnswer = data.data.faqAnswer;
       },
-      async updateAddAlbum() {
-        await addAlbum({
-          albumTitle: this.albumTitle,
-          albumExplain: this.albumExplain,
-          meditationList: this.selectedMeditations
+      async updateAddFaq() {
+        await addFaq({
+          faqQuestion: this.faqQuestion,
+          faqAnswer: this.faqAnswer,
         })
-        this.$router.push('album');
+        this.$router.push('faq');
       },
-      async updateModifyAlbum() {
-        await modifyAlbum({
-          albumTitle: this.albumTitle,
-          albumExplain: this.albumExplain,
-          meditationList: this.selectedMeditations,
-          albumNo: this.albumNo
+      async updateModifyFaq() {
+        await modifyFaq({
+          faqQuestion: this.faqQuestion,
+          faqAnswer: this.faqAnswer,
+          faqNo: this.faqNo
         });
-        this.$router.push('album');
+        this.$router.push('faq');
       },
-      async updateAlbumInfo() {
-        const response = await getDetailAlbum(this.albumNo);
-        const { data } = response;
-        this.albumTitle = data.data.albumTitle;
-        this.albumExplain = data.data.albumExplain;
-        this.selectedMeditations = data.data.selectedMeditations || [];
-      }
     },
     mounted() {
-      this.updateMeditations();
-      if(this.isOnModifynig) {
-        this.updateAlbumInfo()
-      }
+      if(this.isOnModifying) this.updateFaq(this.faqNo);
     },
   };
 </script>

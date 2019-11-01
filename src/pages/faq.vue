@@ -3,20 +3,21 @@
     <div class="faq-content">
       <page-header title="FAQ 게시글 관리"/>
       <div class="faq-container">
-        <card @click="openEditor" class="add-btn">
-          추가하기
-        </card>
+        <router-link to="edit-faq">
+          <card class="add-btn">
+            추가하기
+          </card>
+        </router-link>
         <faq-card
           v-for="faq in faqs"
           :question="faq.faqQuestion"
           :answer="faq.faqAnswer"
-          :index="faq.faqNo"
+          :faqNo="faq.faqNo"
           :key="faq.faqNo"
-          @update="getFaqData"
+          @update="updateFaqs"
         />
       </div>
     </div>
-    <faq-editor v-if="isEditorOpened" @close-editor="closeEditor" />
   </div>
 </template>
 
@@ -25,7 +26,6 @@
   import pageHeader from '../components/PageHeader.vue';
   import FaqCard from '../components/FaqCard.vue';
   import { getFaqs } from '../lib/faq';
-  import FaqEditor from '../components/FaqEditor';
 
   export default {
     name: 'faq',
@@ -33,7 +33,6 @@
       Card,
       pageHeader,
       FaqCard,
-      FaqEditor
     },
     data() {
       return {
@@ -42,33 +41,26 @@
       };
     },
     methods: {
-      async getFaqData() {
+      async updateFaqs() {
         try {
           const response = await getFaqs();
           this.faqs = response.data.data;
         } catch (e) {
-          // eslint-disable-next-line
           console.log(e);
         }
       },
-      openEditor() {
-        this.isEditorOpened = true;
-      },
-      closeEditor() {
-        this.isEditorOpened = false;
-      }
     },
     mounted() {
-      this.getFaqData();
+      this.updateFaqs();
     },
   };
 </script>
 
 <style scoped>
-
   .container {
     overflow: auto;
-    min-height: 100vh;
+    height: 100vh;
+    padding-bottom: 20px;
   }
 
   .add-btn {

@@ -119,21 +119,18 @@ export default {
       const { data } = response.data;
       this.labels = data.map((val, i) => this.getDailyLabel(i));
       this.datasetArray = data
-      console.log(data);
     },
     async updateMonthlyStatistics(date) {
       const response = await getMonthlyStatistics(date);
       const { data } = response.data;
       this.labels = data.map((val, i) => this.getMonthlyLabel(i));
       this.datasetArray = data;
-      console.log(data);
     },
     async updateYearlyStatistics(date) {
       const response = await getYearlyStatistics(date);
       const { data } = response.data;
       this.labels = data.map(((val, i) => this.getYearlyLabel(i)));
       this.datasetArray = data;
-      console.log(data);
     },
     async updateConnectCount() {
       const response = await getConnectionCount();

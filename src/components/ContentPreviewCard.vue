@@ -6,8 +6,8 @@
         <p class="explain">{{contentExplainEllipis}}</p>
       </div>
       <div class="actions">
-        <floating-button><img @click="modifyContent" class="icon edit" src="../../public/icon/edit.svg" alt="edit"></floating-button>
-        <floating-button><img @click="onDeleteContent" class="icon delete" src="../../public/icon/delete.svg" alt="delete"></floating-button>
+        <floating-button><img @click="modifyContent(contentNo)" class="icon edit" src="../../public/icon/edit.svg" alt="edit"></floating-button>
+        <floating-button><img @click="onDeleteContent(contentNo)" class="icon delete" src="../../public/icon/delete.svg" alt="delete"></floating-button>
       </div>
     </card>
   </div>
@@ -32,8 +32,8 @@
       },
     },
     methods: {
-      modifyContent() {
-        this.$emit('modify-content', this.contentNo);
+      modifyContent(id) {
+        this.$router.push(`edit-meditation?meditationNo=${id}`);
       },
       async onDeleteContent() {
         // eslint-disable-next-line
