@@ -7,32 +7,39 @@
           추가하기
 			  </card>
       </router-link>
-			<router-link 
-        :to="`edit-album?albumNo=${album.albumNo}`"
-        v-for="album in albums"
-				:key="album.albumNo"
-      >
         <card
+          v-for="album in albums"
+          :key="album.albumNo"
           class="album-card"
         >
-          <div class="album-description">
-            <p class="title">{{album.albumTitle}}</p>
-            <p>{{album.albumExplain}}</p>
-          </div>
-          <img
-            class="star"
-            :src="album.isRecommend ? require('../assets/ic_star.svg') : require('../assets/ic_star_border.svg')"
-            alt="star"
-            @click="changeAlbumRecommend($event, album.albumNo, album.isRecommend)"
-          >
-          <img
-            class="delete"
-            src="../assets/ic_delete.png"
-            alt="delete"
-            @click="updateDeleteAlbum($event, album.albumNo)"
-          >
-        </card>
-      </router-link>
+        <div class="album-description">
+          <p class="title">{{album.albumTitle}}</p>
+          <p>{{album.albumExplain}}</p>
+        </div>
+        <div class="button-container">
+          <floating-button @click="changeAlbumRecommend($event, album.albumNo, album.isRecommend)">
+            <img
+              class="star"
+              :src="album.isRecommend ? require('../assets/ic_outline_star_white.png') : require('../assets/ic_outline_star_border_white.png')"
+              alt="star"
+            >
+          </floating-button>
+          <floating-button @click="editAlbum(album.albumNo)">
+            <img
+              class="delete"
+              src="../../public/icon/edit.svg"
+              alt="delete"
+            >
+          </floating-button>
+          <floating-button @click="updateDeleteAlbum($event, album.albumNo)">
+            <img
+              class="delete"
+              src="../../public/icon/delete.svg"
+              alt="delete"
+            >
+          </floating-button>
+        </div>
+      </card>
 		</div>
 		<album-editor
 			v-if="isEditorOpened"
@@ -45,6 +52,7 @@
 
 <script>
   import Card from '../components/inheart-ui/card';
+  import FloatingButton from '../components/inheart-ui/floatingButton';
 	import PageHeader from '../components/PageHeader';
 	import AlbumEditor from '../components/AlbumEditor';
   import AlbumViewer from '../components/AlbumViewer';
@@ -52,7 +60,7 @@
 
 	export default {
     name: 'album',
-		components: { Card, PageHeader, AlbumEditor, AlbumViewer },
+		components: { Card, PageHeader, AlbumEditor, AlbumViewer, FloatingButton },
 		data() {
 			return {
 				albums: null,
@@ -62,6 +70,9 @@
 			}
 		},
 		methods: {
+      editAlbum(id) {
+        this.$router.push(`edit-album?albumNo=${id}`);
+      },
       async updateGetAlbums() {
         const response = await getAlbums();
         const { data } = response;
@@ -101,18 +112,13 @@
   align-items: center;
 }
 
-.album-card img {
+.button-container {
   position: absolute;
-  height: 30px;
-  width: 30px;
-}
-
-.album-card img.delete {
   right: 20px;
 }
 
-.album-card img.star {
-  right: 60px;
+.button-container > * {
+  margin-right: 10px;
 }
 
 .album-description {

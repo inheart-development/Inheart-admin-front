@@ -1,6 +1,6 @@
 <template>
   <div class="navigation">
-    <div class="logo-wrapper">
+    <div class="logo-wrapper" @click="login">
       <img class="logo" src="../assets/admin_logo.png" alt="logo" />
       <p>Inheart 관리자</p>
     </div>
@@ -59,6 +59,9 @@ export default {
     async logout() {
       await signout();
       this.$router.push('/');
+    },
+    login() {
+      this.$router.push('/');
     }
   },
 };
@@ -79,6 +82,7 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  cursor: pointer;
 }
 
 .logo {

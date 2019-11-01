@@ -43,8 +43,8 @@
     components: { Card },
     data() {
       return {
-        id: 'sadmin@midasit.com',
-        password: '1234',
+        id: '',
+        password: '',
       };
     },
     methods: {

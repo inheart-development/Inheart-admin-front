@@ -6,8 +6,8 @@
         <p class="explain">{{contentExplainEllipis}}</p>
       </div>
       <div class="actions">
-        <floating-button><img @click="modifyContent(contentNo)" class="icon edit" src="../../public/icon/edit.svg" alt="edit"></floating-button>
-        <floating-button><img @click="onDeleteContent(contentNo)" class="icon delete" src="../../public/icon/delete.svg" alt="delete"></floating-button>
+        <floating-button @click="modifyContent(contentNo)"><img class="icon edit" src="../../public/icon/edit.svg" alt="edit"></floating-button>
+        <floating-button @click="onDeleteContent(contentNo)"><img class="icon delete" src="../../public/icon/delete.svg" alt="delete"></floating-button>
       </div>
     </card>
   </div>

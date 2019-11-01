@@ -5,37 +5,38 @@
       <card @click="createNotice" class="add-btn">
         추가하기
       </card>
-      <router-link
-        v-for="notice in notices"
-        :key="notice.noticeNo"
-        :to="`edit-notice?noticeNo=${notice.noticeNo}`"
-      >
-        <card class="notice-card">
-          <div class="notice-description">
-            <p class="title">{{notice.noticeTitle}}</p>
-            <p>{{notice.noticeText}}</p>
-          </div>
-          <img
-            class="delete"
-            src="../assets/ic_delete.png"
-            alt="delete"
-            @click="updateDeleteNotice($event, notice.noticeNo)"
-          >
-        </card>
-      </router-link>
+      <card  v-for="notice in notices" :key="notice.noticeNo" class="notice-card">
+        <div class="notice-description">
+          <p class="title">{{notice.noticeTitle}}</p>
+          <p>{{notice.noticeText}}</p>
+        </div>
+        <div class="buttons">
+          <floating-button @click="modifyNotice(contentNo)">
+            <img class="edit" src="../../public/icon/edit.svg" alt="edit" />
+          </floating-button>
+          <floating-button @click="updateDeleteNotice($event, notice.noticeNo)">
+            <img
+              class="delete"
+              src="../../public/icon/delete.svg"
+              alt="delete"
+            />
+          </floating-button>
+        </div>
+      </card>
     </div>
   </div>
 </template>
 
 <script>
   import Card from '../components/inheart-ui/card';
+  import floatingButton from '../components/inheart-ui/floatingButton';
   import pageHeader from '../components/PageHeader.vue';
   import NoticeEditor from '../components/NoticeEditor';
   import { getNotices, deleteNotice } from '../lib/notice'
 
   export default {
     name: 'notice',
-    components: { Card, pageHeader, NoticeEditor },
+    components: { Card, pageHeader, NoticeEditor, floatingButton },
     data() {
       return {
         notices: [],
@@ -43,6 +44,9 @@
     },
     methods: {
       createNotice() {
+        this.$router.push('edit-notice')
+      },
+      modifyNotice(id) {
         this.$router.push('edit-notice')
       },
       async updateNotice() {
@@ -83,10 +87,20 @@
   position: relative;
   align-items: center;
 }
-.notice-card .delete {
+.buttons {
   position: absolute;
   right: 20px;
 }
+
+.buttons > * {
+  margin-right: 10px;
+}
+/* 
+.edit {
+  width: 24px;
+  position: absolute;
+  right: 40px;
+} */
 
 .notice-description .title {
   font-weight: bold;
