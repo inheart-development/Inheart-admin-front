@@ -1,4 +1,5 @@
 module.exports = {
   publicPath: 'admin/',
-  assetsDir: 'admin/'
+  assetsDir: 'admin/',
+  productionSourceMap: false
 };
