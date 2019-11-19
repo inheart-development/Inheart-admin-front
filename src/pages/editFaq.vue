@@ -132,6 +132,7 @@
   }
 
   textarea {
+    height:10rem;
     resize: none;
   }
 </style>
