@@ -136,7 +136,7 @@
       }
     },
     mounted() {
-      console.dir(moment().add(1, 'd'))
+      console.dir(moment().add(1, 'd'));
       this.updateSwitcher(this.selectedStatistics);
       this.updateConnectCount();
     },

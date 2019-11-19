@@ -27,6 +27,6 @@
   .floating-button img {
     height: 24px;
     width: 24px;
-    padding: 4px 4px 4px 6px;
+    padding: 4px;
   }
 </style>
