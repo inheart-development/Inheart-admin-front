@@ -47,6 +47,7 @@ export default {
     transition: all .4s ease-in-out;
     font-weight: 300;
     color: #3c4043;
+    cursor: pointer;
   }
 
 </style>
