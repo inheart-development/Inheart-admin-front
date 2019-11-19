@@ -25,7 +25,7 @@
               id="password"
               type="password"
               v-model="password"
-              @keyup.enter="submit"
+              @keyup.enter="signin"
             >
           </div>
         </form>
