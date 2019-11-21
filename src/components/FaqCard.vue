@@ -13,7 +13,7 @@
         <floating-button>
           <img
             @click="onClickEdit(faqNo)"
-            src="/admin/icob/edit.svg"
+            src="/admin/icon/edit.svg"
             alt="edit"
           >
         </floating-button>
