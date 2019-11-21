@@ -13,7 +13,7 @@
         <floating-button>
           <img
             @click="onClickEdit(faqNo)"
-            src="/icon/edit.svg"
+            src="/admin/icob/edit.svg"
             alt="edit"
           >
         </floating-button>
@@ -27,7 +27,7 @@
 
 <script>
   import EditableComponent from './EditableComponent.vue';
-  import { modifyFaq, deleteFaq } from '../lib/faq';
+  import {modifyFaq, deleteFaq} from '../lib/faq';
   import Card from './inheart-ui/card';
   import FloatingButton from './inheart-ui/floatingButton';
 
