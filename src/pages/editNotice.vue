@@ -29,7 +29,7 @@
       </card>
       <card v-if="!isOnModifying" class="btn-card" @click="updateAddNotice">업로드</card>
       <card v-if="isOnModifying" class="btn-card" @click="updateModifyNotice">업로드</card>
-      <router-link to="/album">
+      <router-link to="/notice">
         <card class="btn-card">닫기</card>
       </router-link>
     </div>

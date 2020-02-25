@@ -15,7 +15,7 @@
 					<p>{{ notice.noticeText }}</p>
 				</div>
 				<div class="buttons">
-					<floating-button @click="modifyNotice(contentNo)">
+					<floating-button @click="modifyNotice(notice.noticeNo)">
 						<img class="edit" src="../../public/icon/edit.svg" alt="edit" />
 					</floating-button>
 					<floating-button @click="updateDeleteNotice($event, notice.noticeNo)">
@@ -51,7 +51,12 @@ export default {
 			this.$router.push("edit-notice");
 		},
 		modifyNotice(id) {
-			this.$router.push("edit-notice");
+			this.$router.push({
+				path: "edit-notice",
+				query: {
+					noticeNo: id
+				}
+			});
 		},
 		async updateNotice() {
 			try {
