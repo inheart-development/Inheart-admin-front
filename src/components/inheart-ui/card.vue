@@ -9,7 +9,7 @@
     name: 'card',
     methods: {
       clicked(event) {
-        this.$emit('click',event);
+        this.$emit('click', event);
       }
     }
   }
@@ -18,23 +18,18 @@
 <style lang="scss" scoped>
   @import "../../styles/style";
 
+
   .card {
     @include flex-center;
     padding: 20px;
     background: $background;
     height: auto;
-    margin: 20px auto 0;
+    margin: 20px auto;
     width: 600px;
     max-width: calc(100vw - 60px);
     box-shadow: $box-shadow;
-    transition: $transition;
     border-radius: $radius;
     animation: show .5s;
-  }
-
-  .dark .card {
-    box-shadow: $dark-box-shadow !important;
-    background: $dark-background !important;
-    color: $dark-color !important;
+    color: $color;
   }
 </style>

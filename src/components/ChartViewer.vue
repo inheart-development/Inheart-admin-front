@@ -93,7 +93,7 @@
 
 .current-point {
   font-size: 1.5em;
-  width: 6em;
+  width: 7em;
   text-align: center;
 }
 </style>

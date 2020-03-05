@@ -1,8 +1,7 @@
 <template>
   <div class="navigation">
     <div class="logo-wrapper" @click="login">
-      <img class="logo" src="../assets/admin_logo.png" alt="logo"/>
-      <p>Inheart 관리자</p>
+      <p style="font-size:20px;">inHeart Admin</p>
     </div>
     <div>
       <ul>
@@ -116,17 +115,19 @@
     justify-content: space-between;
     align-content: center;
     position: relative;
+    cursor: pointer;
   }
 
   .navigator span {
     @include flex-center;
   }
 
-  .navigator img{
+  .navigator img {
     margin-bottom: 2px;
   }
+
   .navigator > span > img {
-    margin-right:10px;
+    margin-right: 10px;
   }
 
   .navigator {

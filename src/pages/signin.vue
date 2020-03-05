@@ -1,47 +1,50 @@
 <template>
   <div class="page-container">
-    <card>
-      <div class="login-container">
-        <div class="head">
-          <h2>in<span class="pink">Heart</span>Admin</h2>
-        </div>
-        <form>
-          <div class="input-item">
-            <label class="custom-label" for="id">이메일</label>
-            <input
+    <div class="login-container">
+      <div class="head">
+        <h2><span class="app">in<span class="pink">Heart</span> Admin</span></h2>
+      </div>
+      <div class="input-container">
+        <div class="input-item">
+          <label class="custom-label" for="id">
+            <icon name="account"/>
+          </label>
+          <input
               autocomplete="true"
-              placeholder="이메일을 입력하세요"
+              placeholder="ID"
               class="custom-input"
               id="id"
               type="text"
               v-model="id">
-          </div>
-          <div class="input-item">
-            <label class="custom-label" for="password">비밀번호</label>
-            <input
+        </div>
+        <div class="input-item">
+          <label class="custom-label" for="password">
+            <icon name="lock"/>
+          </label>
+          <input
               autocomplete="true"
-              placeholder="비밀번호를 입력하세요"
+              placeholder="Password"
               class="custom-input"
               id="password"
               type="password"
               v-model="password"
               @keyup.enter="signin"
-            >
-          </div>
-        </form>
-        <div class="login-button" @click="signin">로그인</div>
+          >
+        </div>
       </div>
-    </card>
+      <div class="login-button" @click="signin">Login</div>
+    </div>
   </div>
 </template>
 
 <script>
   import * as AccountAPI from '../lib/account';
   import Card from '../components/inheart-ui/card';
+  import Icon from "../components/inheart-ui/icon";
 
   export default {
     name: 'signin',
-    components: {Card},
+    components: {Icon, Card},
     data() {
       return {
         id: '',
@@ -63,52 +66,96 @@
 <style lang="scss" scoped>
   @import "../styles/style";
 
-  .card {
-    max-width: 300px;
+  .head > h2 {
+    font-size: 36px;
+    font-family: 'Comfortaa', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+
+  .head > p {
+    font-size: 18px;
+    margin-top: 12px;
+    letter-spacing: -.05em;
+  }
+
+  .head {
+    margin-bottom: 10px;
+  }
+
+  .login-container {
+    width: 450px;
+    max-width: calc(100vw - 60px);
+  }
+
+  .input-container {
+    flex-direction: column;
   }
 
   input {
     font-family: 'SpoqaHanSans', 'Spoqa Han Sans', sans-serif;
   }
 
-  .page-container {
-    min-height: 100vh;
-  }
-
-  .page-container, .head {
+  .page-container, .input-container, .input-item {
     @include flex-center;
   }
 
-  .custom-input {
-    margin-top: 5px;
-    border: 0;
-    border-bottom: 1px solid #6d6e72;
-    background: none;
-    font-size: 1rem;
-    padding: 5px;
-    width: 16rem;
-    font-weight: 300;
+  .page-container {
+    height: 99vh;
+    width: 100%;
   }
 
   .input-item {
-    width: 16rem;
-    margin: 15px auto auto;
-  }
+    padding: 10px 0;
+    width: 100%;
+    text-align: center;
 
-  label {
-    font-weight: 500;
-    display: block;
-    font-size: 18px;
+    label {
+      width: 44px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 41px;
+      padding: 8px 10px;
+      background: #f1f3f5;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+
+    input {
+      flex: 1;
+      font-size: 17px;
+      height: 41px;
+      padding: 8px;
+      background: #f1f3f5;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      font-family: 'Comfortaa', sans-serif;
+      font-weight: 300;
+
+      &::placeholder {
+        color: $dark-placeholder-color;
+      }
+    }
   }
 
   .login-button {
     cursor: pointer;
-    background: #E76577;
+    background: #ff6f85;
     margin-top: 20px;
     padding: 10px;
     text-align: center;
     border-radius: 8px;
     color: white;
+    transition: box-shadow, .2s ease-in-out;
+    padding: 12px 0;
+    font-family: 'Comfortaa', sans-serif;
+    font-weight: 700;
+
+    &:hover {
+      box-shadow: 2px 2px 15px 0 #dee2e6;
+    }
+
     font-size: 18px;
   }
 
