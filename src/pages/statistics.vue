@@ -95,15 +95,15 @@
       updateSwitcher(statisticsNum) {
         switch (statisticsNum) {
           case 0:
-            this.showingPoint = this.currentPoint.format('YYYY년');
+            this.showingPoint = this.currentPoint.format('YYYY');
             this.updateYearlyStatistics(this.showingPoint);
             return;
           case 1:
-            this.showingPoint = this.currentPoint.format('YYYY년 M월');
+            this.showingPoint = this.currentPoint.format('YYYY-MM');
             this.updateMonthlyStatistics(this.showingPoint);
             return;
           case 2:
-            this.showingPoint = this.currentPoint.format('YYYY년 M월 D일');
+            this.showingPoint = this.currentPoint.format('YYYY-MM-DD');
             this.updateDailyStatistics(this.showingPoint);
             return;
           default:
