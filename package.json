@@ -22,8 +22,8 @@
   },
   "devDependencies": {
     "@vue/cli": "^4.2.3",
-    "@vue/cli-plugin-babel": "^4.0.5",
-    "@vue/cli-service": "^4.0.5",
+    "@vue/cli-plugin-babel": "^4.5.19",
+    "@vue/cli-service": "^5.0.8",
     "vue-template-compiler": "^2.6.10"
   },
   "postcss": {
